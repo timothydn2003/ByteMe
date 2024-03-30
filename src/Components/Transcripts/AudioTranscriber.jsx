@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { storage } from '../firebase-config';
+import { storage } from '../../firebase-config';
 import useSound from 'use-sound'; // for handling the sound
 import { AiFillPlayCircle, AiFillPauseCircle } from 'react-icons/ai'; // icons for play and pause
 import { BiSkipNext, BiSkipPrevious } from 'react-icons/bi'; // icons for next and previous track
@@ -8,7 +8,7 @@ import { IconContext } from 'react-icons';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 // CSS imports
-import './AudioTranscriber.css';
+import '../../css/Transcripts/AudioTranscriber.css';
 
 export const AudioComponent = () => {
     const [uploaded, setUploaded] = useState({
