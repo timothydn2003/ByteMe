@@ -15,16 +15,19 @@ export const Home = () => {
     const { courses, currentCourse, addCourse } = useContext(Context);
 
     return (
-        <div id="home">
-            {/* take up 1/5 of left side */}
-            <Container id="courses">
-                <CoursesSelector />
-            </Container>
+        <>
+            <h1 style={{ textAlign: "center" }}>Byte My Course</h1>
+            <div id="home">
+                {/* take up 1/5 of left side */}
+                <Container id="courses">
+                    <CoursesSelector />
+                </Container>
 
-            {/* take up 4/5 of right side */}
-            <Container id="transcripts">
-                <TranscriptsSection />
-            </Container>
-        </div>
+                {/* take up 4/5 of right side */}
+                <Container id="transcripts">
+                    <TranscriptsSection />
+                </Container>
+            </div>
+        </>
     );
 };

@@ -45,10 +45,8 @@ export const CoursesSelector = () => {
                         return bDate.getTime() - aDate.getTime();
                     });
 
-                console.log("tmpArr:", tmpArr);
-
                 setCourses(tmpArr);
-                setCurrentCourse(tmpArr[0]); // Assuming tmpArr is not empty.
+                tmpArr.length && setCurrentCourse(tmpArr[0]);
             } catch (error) {
                 console.error("Error fetching courses:", error);
             }
@@ -75,7 +73,9 @@ export const CoursesSelector = () => {
                 <Row className="courseList-container">
                     <Col className="courseList">
                         {courses.map((data) => {
-                            return <CourseButton key={data.id} data={data} />;
+                            return (
+                                <CourseButtonTwo key={data.id} data={data} />
+                            );
                         })}
                     </Col>
                 </Row>
@@ -99,6 +99,31 @@ const CourseButton = ({ data }) => {
             className={`courseBtn ${data === currentCourse ? "active" : ""}`}
         >
             {data.name}
+        </button>
+    );
+};
+
+const CourseButtonTwo = ({ data }) => {
+    const { courses, currentCourse, setCurrentCourse } = useContext(Context);
+
+    const getDescriptionTemp = () => {
+        if (
+            currentCourse.description &&
+            currentCourse.description.length > 200
+        ) {
+            return currentCourse.description;
+        }
+
+        return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mattis lacinia molestie. Nullam euismod suscipit mi porta sodales. Cras vitae consectetur lectus. Praesent porttitor euismod ligula at condimentum";
+    };
+
+    return (
+        <button
+            onClick={() => setCurrentCourse(data)}
+            className={`newCourseBtn ${data === currentCourse ? "active" : ""}`}
+        >
+            <h3>{data.name}</h3>
+            <p className="description">{getDescriptionTemp()}</p>
         </button>
     );
 };
@@ -142,6 +167,7 @@ export const CourseAddModal = ({ open, handleClose }) => {
                                 id="outlined-basic"
                                 label="Course Name"
                                 variant="outlined"
+                                value={courseName}
                             />
                         </Col>
                         <Col>
@@ -150,6 +176,7 @@ export const CourseAddModal = ({ open, handleClose }) => {
                                 id="outlined-basic"
                                 label="Course Description"
                                 variant="outlined"
+                                value={courseDesc}
                             />
                         </Col>
                     </Row>

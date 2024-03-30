@@ -1,19 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
-import { storage } from '../../firebase-config';
-import useSound from 'use-sound'; // for handling the sound
-import { AiFillPlayCircle, AiFillPauseCircle } from 'react-icons/ai'; // icons for play and pause
-import { BiSkipNext, BiSkipPrevious } from 'react-icons/bi'; // icons for next and previous track
-import { IconContext } from 'react-icons';
+import { useContext, useEffect, useRef, useState } from "react";
+import { storage } from "../../firebase-config";
+import useSound from "use-sound"; // for handling the sound
+import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"; // icons for play and pause
+import { BiSkipNext, BiSkipPrevious } from "react-icons/bi"; // icons for next and previous track
+import { IconContext } from "react-icons";
 
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../firebase-config";
+
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // CSS imports
-import '../../css/Transcripts/AudioTranscriber.css';
+import "../../css/Transcripts/AudioTranscriber.css";
+import { Context } from "../CoursesContext";
 
 export const AudioComponent = () => {
     const [uploaded, setUploaded] = useState({
-        fileUrl: '',
+        fileUrl: "",
     });
+
+    const { currentCourse, addCourse } = useContext(Context);
+
     // Reference to the file input element
     const fileInputRef = useRef(null);
 
@@ -21,17 +28,33 @@ export const AudioComponent = () => {
         fileInputRef.current.click();
     };
 
+    // COMMENT: abstract such functionalities to other files so dont need db imports or storage imports
+    const createCourseAudioRef = async (fileUrl, name, fileType) => {
+        const audioRef = {
+            url: fileUrl,
+            name,
+            type: fileType,
+            size: 123456,
+            duration: 123456,
+            courseRef: currentCourse.id,
+            createdAt: new Date(),
+        };
+
+        const courseAudioCollectionRef = collection(db, "CoursesAudios");
+        await addDoc(courseAudioCollectionRef, audioRef);
+    };
+
     const uploadFile = async (file) => {
-        const storageRef = ref(storage, 'uploads/' + file.name);
+        const storageRef = ref(storage, "uploads/" + file.name);
 
         if (!file) return;
 
         try {
             const fileRef = await uploadBytes(storageRef, file);
-            console.log('File uploaded successfully:', fileRef);
+            console.log("File uploaded successfully:", fileRef);
             return fileRef;
         } catch (error) {
-            console.error('Error uploading file:', error);
+            console.error("Error uploading file:", error);
             return null;
         }
     };
@@ -50,7 +73,7 @@ export const AudioComponent = () => {
         const fileRef = await uploadFile(selectedFile);
 
         if (!fileRef) return;
-        console.log('File reference:', fileRef);
+        console.log("File reference:", fileRef);
 
         const fileUrl = await retrieveFileUrl(fileRef);
 
@@ -58,6 +81,8 @@ export const AudioComponent = () => {
         setUploaded({
             fileUrl,
         });
+
+        createCourseAudioRef(fileUrl, selectedFile.name, selectedFile.type);
     };
 
     return (
@@ -74,22 +99,22 @@ export const AudioComponent = () => {
                 />
             </button>
 
-            {uploaded.fileUrl !== '' && (
+            {uploaded.fileUrl !== "" && (
                 <AudioVisualizer src={uploaded.fileUrl} />
             )}
         </>
     );
 };
 
-const AudioVisualizer = ({ src }) => {
+export const AudioVisualizer = ({ src }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [time, setTime] = useState({
-        min: '',
-        sec: '',
+        min: "",
+        sec: "",
     });
     const [currTime, setCurrTime] = useState({
-        min: '',
-        sec: '',
+        min: "",
+        sec: "",
     });
 
     const [seconds, setSeconds] = useState();
@@ -159,7 +184,7 @@ const AudioVisualizer = ({ src }) => {
             <div>
                 <button className="playButton">
                     <IconContext.Provider
-                        value={{ size: '2em', color: '#22223b' }}
+                        value={{ size: "2em", color: "#22223b" }}
                     >
                         <BiSkipPrevious />
                     </IconContext.Provider>
@@ -167,7 +192,7 @@ const AudioVisualizer = ({ src }) => {
                 {!isPlaying ? (
                     <button className="playButton" onClick={playingButton}>
                         <IconContext.Provider
-                            value={{ size: '2em', color: '#22223b' }}
+                            value={{ size: "2em", color: "#22223b" }}
                         >
                             <AiFillPlayCircle />
                         </IconContext.Provider>
@@ -175,7 +200,7 @@ const AudioVisualizer = ({ src }) => {
                 ) : (
                     <button className="playButton" onClick={playingButton}>
                         <IconContext.Provider
-                            value={{ size: '2em', color: '#22223b' }}
+                            value={{ size: "2em", color: "#22223b" }}
                         >
                             <AiFillPauseCircle />
                         </IconContext.Provider>
@@ -183,7 +208,7 @@ const AudioVisualizer = ({ src }) => {
                 )}
                 <button className="playButton">
                     <IconContext.Provider
-                        value={{ size: '2em', color: '#22223b' }}
+                        value={{ size: "2em", color: "#22223b" }}
                     >
                         <BiSkipNext />
                     </IconContext.Provider>
