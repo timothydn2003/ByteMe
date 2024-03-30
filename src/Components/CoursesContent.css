@@ -1,0 +1,26 @@
+.audio-source {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .dropdown {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        width: 50%;
+
+        .chevron-down {
+            width: 2rem;
+            height: 2rem;
+        }
+    }
+}
+
+.course-audios {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+}

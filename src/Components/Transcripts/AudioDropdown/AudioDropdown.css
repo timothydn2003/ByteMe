@@ -1,0 +1,28 @@
+.audio-dropdown {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    overflow: auto;
+
+    .icon {
+        width: 2rem;
+        height: 2rem;
+        transform: rotate(-90deg);
+
+        &.open {
+            transform: rotate(0deg);
+        }
+    }
+
+    .title {
+        font-size: clamp(1.25rem, 2vw, 2rem);
+    }
+
+    .date {
+        font-size: clamp(0.8rem, 1.5vw, 1.5rem);
+    }
+    .type {
+        font-size: clamp(0.8rem, 1.5vw, 1.5rem);
+    }
+}

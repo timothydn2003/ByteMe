@@ -1,15 +1,17 @@
+body {
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 .Header {
     justify-content: center;
     text-align: center;
 }
-.courseBtn {
-    padding: 1rem;
-    background-color: white;
-    border-radius: 1rem;
-    margin-bottom: 20px;
-}
 .App {
     text-align: center;
+    padding: 2rem;
 }
 
 .App-logo {
@@ -24,10 +26,8 @@
     .courses-contents {
         display: flex;
         display: flex-row;
-        border: 2px solid purple;
 
         .body {
-            border: 2px solid purple;
             width: 30%;
         }
     }
@@ -71,8 +71,6 @@
         background-color: lightgray;
     }
 
-    border: 2px solid red;
-
     .title {
         text-align: center;
     }
@@ -80,9 +78,4 @@
     input {
         display: none;
     }
-}
-.courseBtn {
-    padding: 1rem;
-    border-radius: 1rem;
-    margin-bottom: 20px;
 }
