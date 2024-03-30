@@ -22,7 +22,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const Courses = () => {
+const Courses = (props) => {
     const [courses,setCourses] = useState([])
     const [currentCourse, setCurrentCourse] = useState([])
     const courseCollectionRef = collection(db, "Courses")
@@ -39,40 +39,58 @@ const Courses = () => {
     useEffect(() => {
         const getCourses = async() => {
             const data = await getDocs(courseCollectionRef)
-            setCourses(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
-            console.log(courses)
+            const tmpArr = data.docs.map((doc) => ({...doc.data(), id: doc.id}));
+
+            tmpArr.sort((a,b) => {
+                const bDate = new Date(b.date);
+                const aDate = new Date(a.date);
+                return bDate - aDate;
+            })
+            setCourses(tmpArr);
+            setCurrentCourse(tmpArr[0])
         }
         getCourses()
-    })
+        courses.sort((a,b) => {
+            const bDate = new Date(b.date);
+            const aDate = new Date(a.date);
+            return bDate - aDate;
+        })
+
+    },[])
 
     const addCourse = async() => {
-        await addDoc(courseCollectionRef, {name: courseName, description: courseDesc})
+        handleClose()
+        props.setLoading(true)
+        await addDoc(courseCollectionRef, {name: courseName, description: courseDesc, date: new Date().toString()})
+        props.setLoading(false)
     }
     return(
         <div className="courses">
-
             <Container>
                 <Row>
                     <Col>
                         <Button style={{marginBottom: '10px'}} onClick={handleOpen} variant="contained">Add Course</Button>
                     </Col>
                 </Row>
-
-
+                    {courses.length === 0? <h1>No courses</h1>:
                     <Row>
                         <Col style={{disply:'flex', justifyContent:'left'}}>
                             {courses.map((data) => {
                                 return(
                                     <div>
-                                        <button className='courseBtn'>{data.name}</button><br/>
+                                        <button style={data===currentCourse?{backgroundColor:'lightblue'}:{backgroundColor:'white'}}onClick={() => setCurrentCourse(data)} className='courseBtn'>{data.name}</button><br/>
                                     </div>
                                 )
                             })}
                         </Col>
                         <Col>
-
+                            <h1>Name: {currentCourse.name}</h1>
+                        </Col>
+                        <Col>
+                            <h1>Description: {currentCourse.description}</h1>
                         </Col>
                     </Row>
+                    }
 
 
             </Container>
