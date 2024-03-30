@@ -1,9 +1,89 @@
-.Header{
-  justify-content: center;
-  text-align: center;
+.Header {
+    justify-content: center;
+    text-align: center;
 }
-.courseBtn{
-  padding: 1rem;
-  border-radius: 1rem;
-  margin-bottom: 20px;
+.courseBtn {
+    padding: 1rem;
+    background-color: white;
+    border-radius: 1rem;
+    margin-bottom: 20px;
+}
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+.homePage {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid red;
+
+    .courses-contents {
+        display: flex;
+        display: flex-row;
+        border: 2px solid purple;
+
+        .body {
+            border: 2px solid purple;
+            width: 30%;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.audio-component {
+    margin: 3rem;
+
+    transition: background-color 0.2s;
+    &:hover {
+        background-color: lightgray;
+    }
+
+    border: 2px solid red;
+
+    .title {
+        text-align: center;
+    }
+
+    input {
+        display: none;
+    }
+}
+.courseBtn {
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-bottom: 20px;
 }
