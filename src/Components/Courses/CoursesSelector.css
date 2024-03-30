@@ -1,0 +1,49 @@
+#courses {
+    /* border: 5px solid purple; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+
+    /* section for adding new course */
+    .courseAdd {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* section for displaying all courses */
+    .courseList {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+        width: 100%;
+
+        /*  btn for a specific course; allow selection of course */
+        .courseBtn {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &.active {
+                background-color: lightblue;
+            }
+
+            &:hover {
+                background-color: #f0f0f0;
+            }
+        }
+    }
+}
+
+.courseList-container {
+    padding: 0 0 !important;
+    margin: 0 0 !important;
+}
