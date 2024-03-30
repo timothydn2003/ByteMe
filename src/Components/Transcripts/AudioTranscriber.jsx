@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { storage } from '../firebase-config';
+import { storage } from '../../firebase-config';
 import useSound from 'use-sound'; // for handling the sound
 import { AiFillPlayCircle, AiFillPauseCircle } from 'react-icons/ai'; // icons for play and pause
 import { BiSkipNext, BiSkipPrevious } from 'react-icons/bi'; // icons for next and previous track

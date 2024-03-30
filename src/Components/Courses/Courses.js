@@ -3,14 +3,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../App.css';
 import { useEffect, useState } from 'react';
-import { db } from '../firebase-config';
+import { db } from '../../firebase-config';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 import Button from '@mui/material/Button';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import { AudioComponent } from './AudioTranscriber';
+import { AudioComponent } from '../Transcripts/AudioTranscriber';
 
 const style = {
     position: 'absolute',
