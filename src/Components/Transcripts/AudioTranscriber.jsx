@@ -14,7 +14,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import "../../css/Transcripts/AudioTranscriber.css";
 import { Context } from "../CoursesContext";
 
-export const AudioComponent = () => {
+export const AudioComponent = ({ passUp }) => {
     const [uploaded, setUploaded] = useState({
         fileUrl: "",
     });
@@ -77,18 +77,19 @@ export const AudioComponent = () => {
 
         const fileUrl = await retrieveFileUrl(fileRef);
 
+        await createCourseAudioRef(fileUrl, selectedFile.name, selectedFile.type)
+
         // Set the uploaded state to true
         setUploaded({
             fileUrl,
-        });
-
-        createCourseAudioRef(fileUrl, selectedFile.name, selectedFile.type);
+        })
+        passUp(fileUrl)
     };
 
     return (
         <>
             <button className="audio-component" onClick={handleButtonClick}>
-                <h2 className="title">Upload an audio file</h2>
+                <h4 className="title">Upload Audio</h4>
 
                 <input
                     type="file"
