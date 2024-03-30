@@ -20,6 +20,10 @@
     align-items: center;
     justify-content: start;
     justify-items: start;
+    padding: 0 3rem;
+
+    border: 1px solid #c2c2c2;
+    border-radius: 5px;
 
     /* 1/5 */
     width: 80%;

@@ -21,6 +21,8 @@
         justify-content: center;
         width: 100%;
 
+        overflow-y: auto;
+
         /*  btn for a specific course; allow selection of course */
         .courseBtn {
             display: flex;
@@ -40,10 +42,72 @@
                 background-color: #f0f0f0;
             }
         }
+
+        .newCourseBtn {
+            padding: clamp(1rem, 2vw, 2rem);
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            justify-content: center;
+            border-radius: clamp(0.5rem, 2vw, 1rem);
+
+            background: hsla(231, 35%, 16%, 1);
+
+            background: linear-gradient(
+                180deg,
+                hsla(231, 35%, 16%, 1) 0%,
+                hsla(275, 36%, 46%, 1) 100%,
+                hsla(309, 62%, 16%, 1) 100%
+            );
+
+            background: -moz-linear-gradient(
+                180deg,
+                hsla(231, 35%, 16%, 1) 0%,
+                hsla(275, 36%, 46%, 1) 100%,
+                hsla(309, 62%, 16%, 1) 100%
+            );
+
+            background: -webkit-linear-gradient(
+                180deg,
+                hsla(231, 35%, 16%, 1) 0%,
+                hsla(275, 36%, 46%, 1) 100%,
+                hsla(309, 62%, 16%, 1) 100%
+            );
+
+            /* no freakin idea, but shoutout gradient generator */
+            filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#1A1E36", endColorstr="#7D4BA0", GradientType=1 );
+
+            &.active {
+                /* tweak me later */
+                background: hsla(231, 35%, 16%, 1);
+            }
+
+            /* title */
+            h3 {
+                text-transform: uppercase;
+                font-size: clamp(1rem, 2vw, 1.5rem);
+                font-weight: 600;
+                margin-bottom: 1rem;
+                color: white;
+            }
+
+            .description {
+                max-height: 4rem;
+                overflow: hidden;
+                font-size: 1rem;
+                color: #c2c2c2;
+                text-align: left;
+                overflow-y: auto;
+            }
+        }
     }
 }
 
 .courseList-container {
     padding: 0 0 !important;
     margin: 0 0 !important;
+
+    overflow-y: auto;
+    /* height: 100%;
+    width: 100%; */
 }
