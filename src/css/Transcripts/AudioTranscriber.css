@@ -1,6 +1,5 @@
 .component {
     background-color: white;
-    /* width: 25%; */
     max-width: 600px;
     margin: 1em auto;
     padding-bottom: 2em;
@@ -34,6 +33,21 @@
 
 input[type="range"] {
     background-color: #22223b;
+}
+
+.audio-component {
+    border: none;
+    border-radius: 0.3rem;
+    background: hsla(275, 36%, 46%, 1);
+}
+
+.audio-component:hover {
+    background: hsla(231, 35%, 16%, 1) 100%;
+}
+
+.audio-component h4 {
+    color: white;
+    font-weight: 400;
 }
 
 @media (max-width: 900px) {

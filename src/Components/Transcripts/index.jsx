@@ -16,6 +16,7 @@ export const TranscriptsSection = () => {
     const { courses, currentCourse, addCourse } = useContext(Context);
 
     const [courseAudios, setCourseAudios] = useState([]);
+    const [newFile, addFile] = useState('');
 
     useEffect(() => {
         console.log("selected course change: ", currentCourse);
@@ -39,7 +40,7 @@ export const TranscriptsSection = () => {
         };
 
         fetchCourseAudios();
-    }, [currentCourse]);
+    }, [currentCourse, newFile]);
 
     if (!currentCourse) {
         return <h1>No course selected</h1>;
@@ -47,8 +48,9 @@ export const TranscriptsSection = () => {
 
     return (
         <>
-            <Col style={{}}>
-                <AudioComponent />
+            <Col style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                <h1>Description: {currentCourse.description}</h1>
+                <AudioComponent passUp={addFile} />
             </Col>
             {courseAudios.length ? (
                 courseAudios.map((audioRef) => (
@@ -64,14 +66,6 @@ export const TranscriptsSection = () => {
             ) : (
                 <h1>No audio files</h1>
             )}
-            <Col
-                style={{
-                    width: `100%`,
-                    textAlign: "start",
-                }}
-            >
-                <h1>Description: {currentCourse.description}</h1>
-            </Col>
         </>
     );
 };
