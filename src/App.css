@@ -1,12 +1,13 @@
+body {
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 .Header {
     justify-content: center;
     text-align: center;
-}
-.courseBtn {
-    padding: 1rem;
-    background-color: white;
-    border-radius: 1rem;
-    margin-bottom: 20px;
 }
 .App {
     text-align: center;
@@ -20,15 +21,12 @@
 .homePage {
     display: flex;
     flex-direction: column;
-    border: 1px solid red;
 
     .courses-contents {
         display: flex;
         display: flex-row;
-        border: 2px solid purple;
 
         .body {
-            border: 2px solid purple;
             width: 30%;
         }
     }
@@ -81,9 +79,4 @@
     input {
         display: none;
     }
-}
-.courseBtn {
-    padding: 1rem;
-    border-radius: 1rem;
-    margin-bottom: 20px;
 }
