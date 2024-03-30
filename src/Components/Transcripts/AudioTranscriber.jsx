@@ -8,7 +8,7 @@ import { IconContext } from 'react-icons';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 // CSS imports
-import './AudioTranscriber.css';
+import '../../css/Transcripts/AudioTranscriber.css';
 
 export const AudioComponent = () => {
     const [uploaded, setUploaded] = useState({

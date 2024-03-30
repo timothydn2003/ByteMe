@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import '../App.css';
+import '../../App.css';
 import { useEffect, useState } from 'react';
 import { db } from '../../firebase-config';
 import { collection, getDocs, addDoc } from 'firebase/firestore';

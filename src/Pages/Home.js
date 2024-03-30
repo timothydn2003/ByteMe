@@ -1,5 +1,5 @@
-import Courses from '../Components/Courses';
-import '../App.css';
+import Courses from '../Components/Courses/Courses';
+import '../App.css'
 import { useState } from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 
