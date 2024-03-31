@@ -22,8 +22,6 @@
         justify-content: center;
         width: 100%;
 
-        overflow-y: auto;
-
         /*  btn for a specific course; allow selection of course */
         .courseBtn {
             display: flex;
@@ -45,6 +43,7 @@
         }
 
         .newCourseBtn {
+            position: relative;
             width: 100%;
             padding-bottom: clamp(1rem, 2vw, 2rem);
             font-weight: 300;
@@ -56,7 +55,7 @@
             border: none;
             transform: none;
             box-shadow: none;
-            transition: transform 0.1s linear, box-shadow 0.1s linear;
+            transition: transform 0.1s ease-in, box-shadow 0.1s ease-in, width 0.1s ease-in;
 
             /*background: hsla(231, 35%, 16%, 1);
 
@@ -83,20 +82,22 @@
 
             /* no freakin idea, but shoutout gradient generator 
             filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#1A1E36", endColorstr="#7D4BA0", GradientType=1 );*/
-            background: hsla(197, 100%, 63%, 1);
+            background: hsla(213, 77%, 14%, 1);
 
-            background: linear-gradient(45deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+            background: linear-gradient(45deg, hsla(213, 77%, 14%, 1) 0%, hsla(202, 27%, 45%, 1) 100%);
 
-            background: -moz-linear-gradient(45deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+            background: -moz-linear-gradient(45deg, hsla(213, 77%, 14%, 1) 0%, hsla(202, 27%, 45%, 1) 100%);
 
-            background: -webkit-linear-gradient(45deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+            background: -webkit-linear-gradient(45deg, hsla(213, 77%, 14%, 1) 0%, hsla(202, 27%, 45%, 1) 100%);
 
-            filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#40C9FF", endColorstr="#E81CFF", GradientType=1 );
+            filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 );
 
             &.active {
                 /* tweak me later */
                 border: #c2c2c2;
-                background: #2472fc;
+                box-shadow: inset rgba(0, 0, 0, 0.35) 4px 4px 8px !important;
+                transform: none !important;
+                width: 65%;
             }
 
             &:hover {
@@ -106,7 +107,7 @@
 
             &:active {
                 transform: none;
-                box-shadow: none;
+                box-shadow: inset rgba(0, 0, 0, 0.35) 4px 4px 8px;
             }
 
             /* title */
@@ -138,8 +139,11 @@
     width: 100%;
     padding: 2px 2px !important;
     margin: 0 0 !important;
-
     overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     /* height: 100%;
     width: 100%; */
 }

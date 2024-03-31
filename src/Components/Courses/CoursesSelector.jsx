@@ -70,15 +70,15 @@ export const CoursesSelector = () => {
             {courses.length === 0 ? (
                 <h1>No courses</h1>
             ) : (
-                <Row className="courseList-container">
-                    <Col className="courseList">
+                <div className="courseList-container">
+                    <div className="courseList">
                         {courses.map((data) => {
                             return (
                                 <CourseButtonTwo key={data.id} data={data} />
                             );
                         })}
-                    </Col>
-                </Row>
+                    </div>
+                </div>
             )}
 
             <Col>
