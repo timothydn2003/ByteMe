@@ -8,13 +8,33 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0 3rem;
+    padding: 2px 2px !important;
 
-    /* 1/5 */
-    width: 20%;
+    /* 1/6 */
+    width: 15%;
+    height: 90vh;
 }
 
 #transcripts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    justify-items: start;
+    overflow-y: scroll;
+    border: 1px solid #c2c2c2;
+    border-radius: 5px;
+
+    /* 3/6 */
+    width: 45%;
+    height: 85vh;
+}
+
+#transcripts::-webkit-scrollbar {
+    width: 0;
+}
+
+#chatbot {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,6 +45,7 @@
     border: 1px solid #c2c2c2;
     border-radius: 5px;
 
-    /* 1/5 */
-    width: 80%;
+    /* 2/6 */
+    width: 30%;
+    height: 85vh;
 }
