@@ -2,6 +2,7 @@
 import { useState } from "react";
 import "./AudioDropdown.css";
 import { AudioVisualizer } from "../AudioTranscriber";
+import { dateToFormat } from "../../Courses/CoursesSelector";
 
 /*
 interface audioRef {
@@ -35,7 +36,7 @@ export const AudioDropdown = ({ audioRef }) => {
     };
 
     return (
-        <>
+        <div className="audio-dropdown-component-wrapper">
             <div className="audio-dropdown">
                 <div className="icon-container">
                     <svg
@@ -55,9 +56,9 @@ export const AudioDropdown = ({ audioRef }) => {
                     </svg>
                 </div>
 
-                <h2 className="title">{audioRef.name}</h2>
-                <h3 className="date">{formatDate(audioRef.createdAt)}</h3>
-                <h3 className="type">{audioRef.type}</h3>
+                <h3 className="audio-title">{audioRef.name}</h3>
+                <p className="audio-date">{dateToFormat( 'MMM DD, YYYY', audioRef.createdAt.toDate())}</p>
+                <p className="audio-type">{audioRef.type}</p>
             </div>
 
             {displayTranscript && (
@@ -71,7 +72,7 @@ export const AudioDropdown = ({ audioRef }) => {
                     </div>
                 </>
             )}
-        </>
+        </div>
     );
 };
 

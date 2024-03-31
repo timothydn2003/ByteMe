@@ -87,9 +87,9 @@ export const AudioComponent = ({ passUp }) => {
     };
 
     return (
-        <>
+        <div className="audio-component-wrapper">
             <button className="audio-component" onClick={handleButtonClick}>
-                <h4 className="title">Upload Audio</h4>
+                Upload Audio
 
                 <input
                     type="file"
@@ -97,13 +97,9 @@ export const AudioComponent = ({ passUp }) => {
                     accept="audio/*"
                     className=""
                     onChange={handleFileChange}
-                />
+                /> 
             </button>
-
-            {uploaded.fileUrl !== "" && (
-                <AudioVisualizer src={uploaded.fileUrl} />
-            )}
-        </>
+        </div>
     );
 };
 
