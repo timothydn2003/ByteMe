@@ -40,7 +40,7 @@ export const AudioComponent = () => {
             createdAt: new Date(),
         };
 
-        const courseAudioCollectionRef = collection(db, "CoursesAudios");
+        const courseAudioCollectionRef = collection(db, "Courses", `${currentCourse.id}`, "Audios");
         await addDoc(courseAudioCollectionRef, audioRef);
     };
 

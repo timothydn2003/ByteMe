@@ -22,7 +22,7 @@ export const TranscriptsSection = () => {
 
         const fetchCourseAudios = async () => {
             // utilizing currentCourse fetch from CoursesAudio collection
-            const courseAudioCollectionRef = collection(db, "CoursesAudios");
+            const courseAudioCollectionRef = collection(db, "Courses", `${currentCourse.id}`, "Audios");
             const data = await getDocs(courseAudioCollectionRef);
             const tmpArr = data.docs
                 .map((doc) => ({
