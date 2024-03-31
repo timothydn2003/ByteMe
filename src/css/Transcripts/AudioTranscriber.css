@@ -37,12 +37,30 @@ input[type="range"] {
 
 .audio-component {
     border: none;
-    border-radius: 0.3rem;
-    background: hsla(275, 36%, 46%, 1);
+    border-radius: 0.4rem;
+    transform: none;
+    box-shadow: none;
+    transition: transform 0.1s linear, box-shadow 0.1s linear;
+
+    background: hsla(197, 100%, 63%, 1);
+
+    background: linear-gradient(45deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+
+    background: -moz-linear-gradient(45deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+
+    background: -webkit-linear-gradient(45deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#40C9FF", endColorstr="#E81CFF", GradientType=1 );
 }
 
 .audio-component:hover {
-    background: hsla(231, 35%, 16%, 1) 100%;
+    transform: translate(-1px, -1px);
+    box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 4px;
+}
+
+.audio-component:active {
+    transform: none;
+    box-shadow: none;
 }
 
 .audio-component h4 {

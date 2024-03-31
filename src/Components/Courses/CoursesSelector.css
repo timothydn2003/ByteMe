@@ -15,6 +15,7 @@
 
     /* section for displaying all courses */
     .courseList {
+        padding-top: 2px;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -50,8 +51,12 @@
             align-items: start;
             justify-content: center;
             border-radius: clamp(0.5rem, 2vw, 1rem);
+            border: none;
+            transform: none;
+            box-shadow: none;
+            transition: transform 0.1s linear, box-shadow 0.1s linear;
 
-            background: hsla(231, 35%, 16%, 1);
+            /*background: hsla(231, 35%, 16%, 1);
 
             background: linear-gradient(
                 180deg,
@@ -74,12 +79,32 @@
                 hsla(309, 62%, 16%, 1) 100%
             );
 
-            /* no freakin idea, but shoutout gradient generator */
-            filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#1A1E36", endColorstr="#7D4BA0", GradientType=1 );
+            /* no freakin idea, but shoutout gradient generator 
+            filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#1A1E36", endColorstr="#7D4BA0", GradientType=1 );*/
+            background: hsla(197, 100%, 63%, 1);
+
+            background: linear-gradient(45deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+
+            background: -moz-linear-gradient(45deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+
+            background: -webkit-linear-gradient(45deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+
+            filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#40C9FF", endColorstr="#E81CFF", GradientType=1 );
 
             &.active {
                 /* tweak me later */
-                background: hsla(231, 35%, 16%, 1);
+                border: #c2c2c2;
+                background: #2472fc;
+            }
+
+            &:hover {
+                transform: translate(-1px, -1px);
+                box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 4px;
+            }
+
+            &:active {
+                transform: none;
+                box-shadow: none;
             }
 
             /* title */
@@ -98,6 +123,10 @@
                 color: #c2c2c2;
                 text-align: left;
                 overflow-y: auto;
+            }
+
+            label {
+                color: #c2c2c2;
             }
         }
     }

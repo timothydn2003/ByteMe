@@ -123,10 +123,28 @@ const CourseButtonTwo = ({ data }) => {
             className={`newCourseBtn ${data === currentCourse ? "active" : ""}`}
         >
             <h3>{data.name}</h3>
-            <p className="description">{getDescriptionTemp()}</p>
+
+            <label style={{fontSize: 'smaller'}}>Date Created</label>
+            <p className="description">{dateToFormat('MMM DD, YYYY', new Date(data.date))}</p>
         </button>
     );
 };
+
+export const dateToFormat = (format, date) => {
+    let str = format.toLowerCase().slice()
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+
+    let mm = (str.includes('mmm') ? 'mmm' : 'mm')
+    let dd = (str.includes('ddd') ? 'ddd' : 'dd')
+    let yy = (str.includes('yyyy') ? 'yyyy' : 'yy')
+
+    str = str.replace(mm, (mm === 'mm' ? (date.getMonth() + 1).toString().padStart(2, '0') : monthNames[date.getMonth()]))
+    str = str.replace(dd, (dd === 'dd' ? (date.getDate()).toString().padStart(2, '0') : dayNames[date.getDay()]))
+    str = str.replace(yy, (yy === 'yyyy' ? (date.getFullYear()).toString() : date.getFullYear().toString().slice(-2)))
+
+    return str
+}
 
 export const CourseAddModal = ({ open, handleClose }) => {
     const style = {
