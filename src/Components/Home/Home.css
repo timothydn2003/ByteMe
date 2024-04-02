@@ -24,6 +24,7 @@
     overflow-y: scroll;
     border: 1px solid #c2c2c2;
     border-radius: 5px;
+    gap: 1rem;
 
     /* 3/6 */
     width: 45%;

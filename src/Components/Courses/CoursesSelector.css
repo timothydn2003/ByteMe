@@ -1,63 +1,64 @@
 #courses {
-    /* border: 5px solid purple; */
+  /* border: 5px solid purple; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+
+  /* section for adding new course */
+  .courseAdd {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    align-items: center;
     justify-content: center;
+  }
 
-    /* section for adding new course */
-    .courseAdd {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+  /* section for displaying all courses */
+  .courseList {
+    padding: 2px 2px !important;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    justify-content: center;
+    width: 100%;
+
+    /*  btn for a specific course; allow selection of course */
+    .courseBtn {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      align-items: center;
+      padding: 10px;
+      background-color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &.active {
+        background-color: lightblue;
+      }
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
     }
 
-    /* section for displaying all courses */
-    .courseList {
-        padding: 2px 2px !important;
-        display: flex;
-        flex-direction: column;
-        row-gap: 10px;
-        justify-content: center;
-        width: 100%;
+    .newCourseBtn {
+      position: relative;
+      width: 100%;
+      padding-bottom: clamp(1rem, 2vw, 2rem);
+      font-weight: 300;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+      border-radius: clamp(0.5rem, 2vw, 1rem);
+      border: none;
+      transform: none;
+      box-shadow: none;
+      transition: transform 0.1s ease-in, box-shadow 0.1s ease-in,
+        width 0.1s ease-in;
 
-        /*  btn for a specific course; allow selection of course */
-        .courseBtn {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            align-items: center;
-            padding: 10px;
-            background-color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-
-            &.active {
-                background-color: lightblue;
-            }
-
-            &:hover {
-                background-color: #f0f0f0;
-            }
-        }
-
-        .newCourseBtn {
-            position: relative;
-            width: 100%;
-            padding-bottom: clamp(1rem, 2vw, 2rem);
-            font-weight: 300;
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            justify-content: center;
-            border-radius: clamp(0.5rem, 2vw, 1rem);
-            border: none;
-            transform: none;
-            box-shadow: none;
-            transition: transform 0.1s ease-in, box-shadow 0.1s ease-in, width 0.1s ease-in;
-
-            /*background: hsla(231, 35%, 16%, 1);
+      /*background: hsla(231, 35%, 16%, 1);
 
             background: linear-gradient(
                 180deg,
@@ -82,68 +83,124 @@
 
             /* no freakin idea, but shoutout gradient generator 
             filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#1A1E36", endColorstr="#7D4BA0", GradientType=1 );*/
-            background: hsla(213, 77%, 14%, 1);
+      background: hsla(213, 77%, 14%, 1);
 
-            background: linear-gradient(45deg, hsla(213, 77%, 14%, 1) 0%, hsla(202, 27%, 45%, 1) 100%);
+      background: linear-gradient(
+        45deg,
+        hsla(213, 77%, 14%, 1) 0%,
+        hsla(202, 27%, 45%, 1) 100%
+      );
 
-            background: -moz-linear-gradient(45deg, hsla(213, 77%, 14%, 1) 0%, hsla(202, 27%, 45%, 1) 100%);
+      background: -moz-linear-gradient(
+        45deg,
+        hsla(213, 77%, 14%, 1) 0%,
+        hsla(202, 27%, 45%, 1) 100%
+      );
 
-            background: -webkit-linear-gradient(45deg, hsla(213, 77%, 14%, 1) 0%, hsla(202, 27%, 45%, 1) 100%);
+      background: -webkit-linear-gradient(
+        45deg,
+        hsla(213, 77%, 14%, 1) 0%,
+        hsla(202, 27%, 45%, 1) 100%
+      );
 
-            filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 );
+      filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 );
 
-            &.active {
-                /* tweak me later */
-                border: #c2c2c2;
-                box-shadow: inset rgba(0, 0, 0, 0.35) 4px 4px 8px !important;
-                transform: none !important;
-                width: 65%;
-            }
+      &.active {
+        /* tweak me later */
+        border: #c2c2c2;
+        box-shadow: inset rgba(0, 0, 0, 0.35) 4px 4px 8px !important;
+        transform: none !important;
+        width: 65%;
 
-            &:hover {
-                transform: translate(-1px, -1px);
-                box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 4px;
-            }
-
-            &:active {
-                transform: none;
-                box-shadow: inset rgba(0, 0, 0, 0.35) 4px 4px 8px;
-            }
-
-            /* title */
-            h3 {
-                text-transform: uppercase;
-                font-size: clamp(1rem, 2vw, 1.5rem);
-                font-weight: 300;
-                margin-bottom: 1rem;
-                color: white;
-            }
-
-            .description {
-                max-height: 4rem;
-                overflow: hidden;
-                font-size: 1rem;
-                color: #c2c2c2;
-                text-align: left;
-                overflow-y: auto;
-            }
-
-            label {
-                color: #c2c2c2;
-            }
+        .deleteBtn {
+          display: block;
+          visibility: visible;
         }
+      }
+
+      &:hover {
+        transform: translate(-1px, -1px);
+        box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 4px;
+
+        .deleteBtn {
+          display: block;
+          visibility: visible;
+        }
+      }
+
+      &:active {
+        transform: none;
+        box-shadow: inset rgba(0, 0, 0, 0.35) 4px 4px 8px;
+
+        .deleteBtn {
+          display: block;
+          visibility: visible;
+        }
+      }
+
+      /* title */
+      h3 {
+        text-transform: uppercase;
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        font-weight: 300;
+        margin-bottom: 1rem;
+        color: white;
+      }
+
+      .description {
+        max-height: 4rem;
+        overflow: hidden;
+        font-size: 1rem;
+        color: #c2c2c2;
+        text-align: left;
+        overflow-y: auto;
+      }
+
+      label {
+        color: #c2c2c2;
+      }
+
+      .deleteBtn {
+        position: absolute;
+        right: 0.25rem;
+        top: 0.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ff4747;
+        color: white;
+        border: none;
+        border-radius: 9999px;
+        cursor: pointer;
+
+        /* effects; tailwind based ideas */
+        transition-property: all;
+        transition-timining-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+        visibility: hidden;
+
+        &:hover {
+          background-color: #ff3333;
+        }
+
+        svg {
+          width: 1rem !important;
+          height: 1rem !important;
+        }
+      }
     }
+  }
 }
 
 .courseList-container {
-    width: 100%;
-    padding: 2px 2px !important;
-    margin: 0 0 !important;
-    overflow-y: auto;
+  width: 100%;
+  padding: 2px 2px !important;
+  margin: 0 0 !important;
+  overflow-y: auto;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* height: 100%;
     width: 100%; */
 }
