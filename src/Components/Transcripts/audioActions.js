@@ -1,3 +1,9 @@
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../firebase-config";
+import { storage } from "../../firebase-config";
+
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 /**
  * Function to upload audio file to OpenAI for transcription
  * @param {fileChunk} audioData File chunk to be uploaded
@@ -46,6 +52,11 @@ export const uploadAudioForTranscription = async (audioData, fileName) => {
   }
 };
 
+/**
+ * Function to summarize the transcribed audio, using OpenAI model
+ * @param {String} transcription audio that is to be summarized, should be a transcribed audios text
+ * @returns String value of the summarized text
+ */
 export const summarizeAudioTranscription = async (transcription) => {
   try {
     const gptResponse = await fetch(
@@ -88,4 +99,59 @@ export const summarizeAudioTranscription = async (transcription) => {
     console.error(error);
     return null;
   }
+};
+
+export const uploadFile = async (file) => {
+  const storageRef = ref(storage, "uploads/" + file.name);
+
+  if (!file) return;
+
+  try {
+    const fileRef = await uploadBytes(storageRef, file);
+    console.log("File uploaded successfully:", fileRef);
+    return fileRef;
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    return null;
+  }
+};
+
+export const retrieveFileUrl = async (fileRef) => {
+  // name of file ref to create a ref blob
+  const fileName = fileRef.metadata.fullPath;
+
+  const fileUrl = await getDownloadURL(ref(storage, fileName));
+  return fileUrl;
+};
+
+// COMMENT: abstract such functionalities to other files so dont need db imports or storage imports
+export const createCourseAudioRef = async (
+  fileUrl,
+  name,
+  fileType,
+  transcript,
+  fileSize,
+  duration,
+  summarizedText,
+  currentCourse
+) => {
+  const audioRef = {
+    url: fileUrl,
+    name,
+    type: fileType,
+    size: fileSize || 0,
+    duration: duration || 0,
+    courseRef: currentCourse.id,
+    createdAt: new Date(),
+    transcript: transcript,
+    summary: summarizedText,
+  };
+
+  const courseAudioCollectionRef = collection(
+    db,
+    "Courses",
+    `${currentCourse.id}`,
+    "Audios"
+  );
+  await addDoc(courseAudioCollectionRef, audioRef);
 };
