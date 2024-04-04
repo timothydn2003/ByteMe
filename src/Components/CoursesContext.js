@@ -11,6 +11,14 @@ const Context = React.createContext({
   setCurrentCourse: () => {},
   addCourse: (courseName, courseDesc) => {},
   setCourses: () => {},
+  liveTranscription: {
+    isRecording: false,
+    audioChunk: null,
+    transcription: "",
+    title: "",
+    audioUrl: "",
+  },
+  setTranscription: () => {},
 });
 
 const CoursesContext = ({ children }) => {
@@ -18,37 +26,13 @@ const CoursesContext = ({ children }) => {
   const [courses, setCourses] = React.useState([]);
   const [currentCourse, setCurrentCourse] = React.useState(null);
 
-  // useEffect(() => {
-  //     const getCourses = async () => {
-  //         try {
-  //             const data = await getDocs(courseCollectionRef);
-  //             const tmpArr = data.docs
-  //                 .map((doc) => ({
-  //                     ...doc.data(),
-  //                     id: doc.id,
-  //                 }))
-  //                 .sort((a, b) => {
-  //                     // Sort operation right after mapping.
-  //                     const bDate = new Date(b.date);
-  //                     const aDate = new Date(a.date);
-  //                     return bDate.getTime() - aDate.getTime(); // Use getTime for accurate sorting.
-  //                 });
-
-  //             console.log("tmpArr:", tmpArr);
-
-  //             setCourses(tmpArr);
-  //             setCurrentCourse(tmpArr[0]); // Assuming tmpArr is not empty.
-  //         } catch (error) {
-  //             console.error("Error fetching courses:", error);
-  //         }
-  //     };
-  //     getCourses();
-  //     // courses.sort((a, b) => {
-  //     //     const bDate = new Date(b.date);
-  //     //     const aDate = new Date(a.date);
-  //     //     return bDate - aDate;
-  //     // });
-  // }, []);
+  const [transcription, setTranscription] = React.useState({
+    isRecording: false,
+    audioChunk: null,
+    transcription: "",
+    audioUrl: "",
+    title: "",
+  });
 
   const addCourse = async (courseName, courseDesc) => {
     const newDoc = await addDoc(courseCollectionRef, {
@@ -58,7 +42,8 @@ const CoursesContext = ({ children }) => {
     });
 
     // add new doc to courses so re-render
-    // setCourses((prevCourses) => [newDoc.data(), ...prevCourses]); // ahh, this is the problem
+    // COMMENT: ahh, this is the problem; but want o implement this
+    // setCourses((prevCourses) => [newDoc.data(), ...prevCourses]);
     window.location.reload();
   };
 
@@ -70,6 +55,8 @@ const CoursesContext = ({ children }) => {
         setCurrentCourse,
         addCourse,
         setCourses,
+        liveTranscription: transcription,
+        setTranscription,
       }}
     >
       {children}

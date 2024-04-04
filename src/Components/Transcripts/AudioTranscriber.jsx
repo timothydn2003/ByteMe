@@ -26,21 +26,20 @@ import { Context } from "../CoursesContext";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
 import {
+  createCourseAudioRef,
+  retrieveFileUrl,
   summarizeAudioTranscription,
   uploadAudioForTranscription,
+  uploadFile,
 } from "./audioActions";
 
 const ffmpeg = new FFmpeg();
-ffmpeg.on("log", (log) => {
-  console.log(log.message);
-});
 
 export const AudioComponent = ({ passUp }) => {
   const [uploaded, setUploaded] = useState({
     fileUrl: "",
   });
-  const { currentCourse, addCourse, courseAudios, setCourseAudios } =
-    useContext(Context);
+  const { currentCourse } = useContext(Context);
 
   // used for checking if ffmpeg is ready
   const [ready, setReady] = useState(false);
@@ -59,6 +58,14 @@ export const AudioComponent = ({ passUp }) => {
     load();
   }, []);
 
+  // Reference to the file input element
+  const fileInputRef = useRef(null);
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+  // function to segment chunks so no large files uploaded to open AI
   const convertAndSplit = async (file) => {
     // Sanitize file name; this threw me off for longest time; so assure file name is sanitized
     const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
@@ -110,8 +117,6 @@ export const AudioComponent = ({ passUp }) => {
       if (splitResp !== 0) {
         console.error("Error during splitting of audio!");
         return;
-      } else {
-        console.log("Splitting successful!");
       }
 
       // get the list of files in the virtualized FS for processing chunks we created
@@ -160,67 +165,6 @@ export const AudioComponent = ({ passUp }) => {
     }
   };
 
-  // Reference to the file input element
-  const fileInputRef = useRef(null);
-
-  const handleButtonClick = () => {
-    fileInputRef.current.click();
-  };
-
-  // COMMENT: abstract such functionalities to other files so dont need db imports or storage imports
-  const createCourseAudioRef = async (
-    fileUrl,
-    name,
-    fileType,
-    transcript,
-    fileSize,
-    duration,
-    summarizedText
-  ) => {
-    const audioRef = {
-      url: fileUrl,
-      name,
-      type: fileType,
-      size: fileSize || 0,
-      duration: duration || 0,
-      courseRef: currentCourse.id,
-      createdAt: new Date(),
-      transcript: transcript,
-      summary: summarizedText,
-    };
-
-    const courseAudioCollectionRef = collection(
-      db,
-      "Courses",
-      `${currentCourse.id}`,
-      "Audios"
-    );
-    await addDoc(courseAudioCollectionRef, audioRef);
-  };
-
-  const uploadFile = async (file) => {
-    const storageRef = ref(storage, "uploads/" + file.name);
-
-    if (!file) return;
-
-    try {
-      const fileRef = await uploadBytes(storageRef, file);
-      console.log("File uploaded successfully:", fileRef);
-      return fileRef;
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      return null;
-    }
-  };
-
-  const retrieveFileUrl = async (fileRef) => {
-    // name of file ref to create a ref blob
-    const fileName = fileRef.metadata.fullPath;
-
-    const fileUrl = await getDownloadURL(ref(storage, fileName));
-    return fileUrl;
-  };
-
   // Function to handle file selection
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
@@ -231,7 +175,6 @@ export const AudioComponent = ({ passUp }) => {
     // Convert and split the audio file
     setLoadingTranscription(true);
     const STT_transcription = await convertAndSplit(selectedFile);
-    console.log("stt transcirpt: ", STT_transcription);
     let transcriptedText = "";
     if (STT_transcription && STT_transcription.length > 0) {
       transcriptedText = STT_transcription.join(" ");
@@ -244,8 +187,8 @@ export const AudioComponent = ({ passUp }) => {
     setLoadingTranscription(false);
 
     setLoadingSummary(true);
-    // Summarize the transcription
 
+    // Summarize the transcription
     const summarizedText = await summarizeAudioTranscription(transcriptedText);
     if (!summarizedText) {
       console.error("Failed to summarize transcription");
@@ -270,7 +213,8 @@ export const AudioComponent = ({ passUp }) => {
       transcriptedText,
       selectedFile.size,
       selectedFile.duration,
-      summarizedText
+      summarizedText,
+      currentCourse
     );
 
     // Set the uploaded state to true

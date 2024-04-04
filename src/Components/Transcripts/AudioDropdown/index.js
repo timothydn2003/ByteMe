@@ -1,12 +1,16 @@
 // CSS import
 import "./AudioDropdown.css";
-import { useState } from "react";
+
+// REACT imports
+import { useEffect, useRef, useState } from "react";
+
+// Components imports
 import { AudioVisualizer } from "../AudioTranscriber";
 import { dateToFormat } from "../../Courses/CoursesSelector";
 
 // FIREBASE imports
 import { db } from "../../../firebase-config";
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 import useSound from "use-sound"; // for handling the sound
 
@@ -77,12 +81,18 @@ export const AudioDropdown = ({ audioRef }) => {
 export const AudioTranscriptDrown = ({ audioRef }) => {
   const [displayTranscript, setDisplayTranscript] = useState(false);
 
+  const [updateTitle, setUpdateTitle] = useState({
+    editing: false,
+    title: audioRef.name || "",
+  });
+  const updateTitleRef = useRef(null);
+
   const handleDelete = async (e) => {
     e.preventDefault();
     const id = audioRef.id;
     try {
       // delete from db
-      const docRef = doc(db, "Audio", `${audioRef?.courseRef}`, id);
+      const docRef = doc(db, "Courses", `${audioRef?.courseRef}`, `Audios`, id);
       await deleteDoc(docRef);
       window.location.reload();
     } catch (error) {
@@ -90,16 +100,88 @@ export const AudioTranscriptDrown = ({ audioRef }) => {
     }
   };
 
+  // handle title changes
+  const onChange = (e) => {
+    setUpdateTitle({ ...updateTitle, title: e.target.value });
+  };
+  const handleSave = async () => {
+    if (updateTitle.title !== audioRef.name) {
+      await updateDocument();
+    }
+    setUpdateTitle({ ...updateTitle, editing: false });
+  };
+
+  const toggleEdit = () => {
+    setUpdateTitle((prev) => ({ ...prev, editing: !prev.editing }));
+    setTimeout(
+      () => updateTitleRef.current && updateTitleRef.current.focus(),
+      0
+    );
+  };
+
+  const updateDocument = async () => {
+    const documentRef = doc(
+      db,
+      "Courses",
+      `${audioRef?.courseRef}`,
+      "Audios",
+      audioRef.id
+    );
+
+    // update the field
+    const updateResp = await updateDoc(documentRef, {
+      name: updateTitle.title,
+    });
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        updateTitleRef.current &&
+        !updateTitleRef.current.contains(event.target)
+      ) {
+        handleSave();
+      }
+    };
+
+    if (updateTitle.editing) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [updateTitle.editing]);
+
   return (
     <div
       className="course-audio-content"
       onClick={() => setDisplayTranscript(!displayTranscript)}
     >
       <div className="audio-summary">
-        <h2 className="audio-title">{audioRef.name}</h2>
+        <div className="audio-title-content" ref={updateTitleRef}>
+          {updateTitle.editing ? (
+            <input
+              type="text"
+              className="audio-title-edit"
+              value={updateTitle.title}
+              onChange={onChange}
+              onBlur={handleSave}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSave();
+              }}
+              autoFocus
+            />
+          ) : (
+            <h2 className="audio-title" onClick={toggleEdit}>
+              {updateTitle.title}
+            </h2>
+          )}
+        </div>
 
         <div className={`audio-details ${displayTranscript ? "active" : ""}`}>
-          <p className="audio-description">{audioRef.transcript || tempText}</p>
+          <p className="audio-description">
+            {audioRef.summary || audioRef.transcript || ""}
+          </p>
         </div>
       </div>
 
@@ -136,7 +218,7 @@ export const TranscriptDialogue = ({ transcript }) => {
 };
 
 // Media player; play btn or soundbar
-const MediaPlayer = ({ src }) => {
+export const MediaPlayer = ({ src }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const [play, { pause }] = useSound(src, {
