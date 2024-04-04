@@ -70,7 +70,7 @@ input[type="range"] {
 }
 
 .audio-component-wrapper {
-  width: 75%;
+  /* width: 75%; */
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -84,6 +84,7 @@ input[type="range"] {
   align-content: center;
   align-items: center;
   justify-content: center;
+  justify-items: center;
   width: 40%;
 }
 
@@ -96,10 +97,10 @@ input[type="range"] {
 }
 
 .audio-component {
-  width: 90%;
-  padding: 0 !important;
+  /* width: 90%; */
+  padding: 0rem 1rem !important;
   margin: 0 !important;
-  font-size: clamp(1rem, 1.25vw, 2rem);
+  /* font-size: clamp(1rem, 1.25vw, 2rem); */
   font-weight: 400;
   border: none;
   border-radius: 0.25em;
@@ -107,7 +108,20 @@ input[type="range"] {
   box-shadow: none;
   color: white;
   transition: transform 0.1s linear, box-shadow 0.1s linear;
-  background: #2472fc !important;
+  background: #1976d2 !important;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500 !important;
+  /* font-size: 0.875rem; */
+  font-size: clamp(0.5rem, 0.75vw, 1rem) !important;
+  line-height: 1.75 !important;
+  letter-spacing: 0.02857em !important;
+  text-transform: uppercase;
+  padding: 6px 16px !important;
+  border-radius: 4px !important;
+  /* nowrap */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .audio-component:hover {
@@ -137,95 +151,117 @@ input[type="range"] {
 }
 
 .typewriter-text {
-    overflow: hidden;
-    border-right: 0.15em solid black;
-    white-space: nowrap;
-    margin: 0 auto;
-    letter-spacing: 0.15em;
-    animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+  overflow: hidden;
+  border-right: 0.15em solid black;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: 0.15em;
+  animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
 }
 
 .uploadToggleContainer {
-    width: 97.5%;
-    padding-right: 2.5%;
-    display: flex;
-    justify-content: flex-end;
+  width: 97.5%;
+  padding-right: 4.5%;
+  display: flex;
+  justify-content: flex-end;
+}
+.audioOptionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 .uploadToggle::before {
-    content: "Content Type";
-    position: absolute;
-    left: 55%;
-    top: -65%;
-    color: rgba(105, 105, 105, 0.5);
-    font-size: clamp(0.5rem, 0.75vw, 1rem);
-    font-style: italic;
+  content: "Content Type";
+  position: absolute;
+  white-space: nowrap;
+  /* left: 35%; */
+  top: -65%;
+  color: rgba(105, 105, 105, 0.5);
+  font-size: clamp(0.5rem, 0.75vw, 1rem);
+  font-style: italic;
 }
 
 .uploadToggle {
-    position: relative;
-    width: 25%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    border-radius: 0.25rem;
-    border: solid 1px #f1f1f1;
-    padding: 0.5rem;
+  position: relative;
+  width: 25%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 0.25rem;
+  border: solid 1px #f1f1f1;
+  padding: 0.5rem;
 
-    box-shadow: 
-    6px 6px 10px 0 rgba(0, 0, 0, 0.25),
+  box-shadow: 6px 6px 10px 0 rgba(0, 0, 0, 0.25),
+    -2px -2px 6px 0 rgba(255, 255, 255, 0.3);
+}
+
+.uploadToggleAudioOptions {
+  position: relative;
+  /* width: 25%; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 0.25rem;
+  border: solid 1px #f1f1f1;
+  padding: 0.5rem;
+
+  box-shadow: 6px 6px 10px 0 rgba(0, 0, 0, 0.25),
     -2px -2px 6px 0 rgba(255, 255, 255, 0.3);
 }
 
 .uploadToggleHighlighter {
-    position: absolute;
-    width: 40%;
-    height: 50%;
-    border-radius: 1rem;
-    z-index: 1;
-    transition: transform 0.2s ease-in;
+  position: absolute;
+  width: 40%;
+  height: 50%;
+  border-radius: 1rem;
+  z-index: 1;
+  transition: transform 0.2s ease-in;
 
-    background: hsla(213, 77%, 14%, 1);
-    background: linear-gradient(
-        45deg,
-        hsla(213, 77%, 14%, 1) 0%,
-        hsla(202, 27%, 45%, 1) 100%
-    );
-    background: -moz-linear-gradient(
-        45deg,
-        hsla(213, 77%, 14%, 1) 0%,
-        hsla(202, 27%, 45%, 1) 100%
-    );
-    background: -webkit-linear-gradient(
-        45deg,
-        hsla(213, 77%, 14%, 1) 0%,
-        hsla(202, 27%, 45%, 1) 100%
-    );
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 );
+  background: hsla(213, 77%, 14%, 1);
+  background: linear-gradient(
+    45deg,
+    hsla(213, 77%, 14%, 1) 0%,
+    hsla(202, 27%, 45%, 1) 100%
+  );
+  background: -moz-linear-gradient(
+    45deg,
+    hsla(213, 77%, 14%, 1) 0%,
+    hsla(202, 27%, 45%, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    hsla(213, 77%, 14%, 1) 0%,
+    hsla(202, 27%, 45%, 1) 100%
+  );
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 );
 }
 
 .uploadToggleItem {
-    font-size: clamp(0.5rem, 0.75vw, 1rem);
-    width: 45%;
-    z-index: 2;
-    color: black;
-    border: none;
-    background-color: rgba(0,0,0,0);
+  font-size: clamp(0.5rem, 0.75vw, 1rem);
+  width: 45%;
+  z-index: 2;
+  color: black;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .uploadToggleItem:hover {
-    color: #2472fc;
+  color: #2472fc;
 }
 
 .activeToggleItem {
-    color: white !important;
+  color: white !important;
 }
 
 @media (max-width: 900px) {
-    .component {
-        width: 50%;
-    }
+  .component {
+    width: 50%;
+  }
 }
 
 @keyframes typing {

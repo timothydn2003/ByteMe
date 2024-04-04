@@ -1,11 +1,11 @@
 // Components/CoursesContext.js
 
-import React, { useEffect } from "react";
+import { createContext, useState } from "react";
 
 import { db } from "../firebase-config";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 
-const Context = React.createContext({
+const Context = createContext({
   courses: [],
   currentCourse: null,
   setCurrentCourse: () => {},
@@ -19,14 +19,16 @@ const Context = React.createContext({
     audioUrl: "",
   },
   setTranscription: () => {},
+  updatedAudio: false,
+  setUpdatedAudio: () => {},
 });
 
 const CoursesContext = ({ children }) => {
   const courseCollectionRef = collection(db, "Courses");
-  const [courses, setCourses] = React.useState([]);
-  const [currentCourse, setCurrentCourse] = React.useState(null);
+  const [courses, setCourses] = useState([]);
+  const [currentCourse, setCurrentCourse] = useState(null);
 
-  const [transcription, setTranscription] = React.useState({
+  const [transcription, setTranscription] = useState({
     isRecording: false,
     audioChunk: null,
     transcription: "",
@@ -34,6 +36,7 @@ const CoursesContext = ({ children }) => {
     title: "",
   });
 
+  const [updatedAudio, setUpdatedAudio] = useState(false);
   const addCourse = async (courseName, courseDesc) => {
     const newDoc = await addDoc(courseCollectionRef, {
       name: courseName,
@@ -57,6 +60,8 @@ const CoursesContext = ({ children }) => {
         setCourses,
         liveTranscription: transcription,
         setTranscription,
+        updatedAudio,
+        setUpdatedAudio,
       }}
     >
       {children}

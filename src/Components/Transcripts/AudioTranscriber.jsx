@@ -29,6 +29,7 @@ import {
   createCourseAudioRef,
   retrieveFileUrl,
   summarizeAudioTranscription,
+  summarizedTextToMarkdown,
   uploadAudioForTranscription,
   uploadFile,
 } from "./audioActions";
@@ -39,7 +40,8 @@ export const AudioComponent = ({ passUp }) => {
   const [uploaded, setUploaded] = useState({
     fileUrl: "",
   });
-  const { currentCourse } = useContext(Context);
+  const { currentCourse, updatedAudio, setUpdatedAudio, setCurrentCourse } =
+    useContext(Context);
 
   // used for checking if ffmpeg is ready
   const [ready, setReady] = useState(false);
@@ -196,33 +198,53 @@ export const AudioComponent = ({ passUp }) => {
       setLoading(false);
       return;
     }
+
+    const markdownText = await summarizedTextToMarkdown(summarizedText);
+
+    console.log("md resp: ", markdownText);
+    // convert the markdown to base 64 to not lose the formatting
+    const base64Encoded_MD = btoa(markdownText);
     setLoadingSummary(false);
 
-    // Upload the file to Firebase Storage
-    const fileRef = await uploadFile(selectedFile);
+    const uploadAudioToFireBase = async () => {
+      try {
+        // Upload the file to Firebase Storage
+        const fileRef = await uploadFile(selectedFile);
 
-    if (!fileRef) return;
-    console.log("File reference:", fileRef);
+        if (!fileRef) return;
+        console.log("File reference:", fileRef);
 
-    const fileUrl = await retrieveFileUrl(fileRef);
+        const fileUrl = await retrieveFileUrl(fileRef);
+        await createCourseAudioRef(
+          fileUrl,
+          selectedFile.name,
+          selectedFile.type,
+          transcriptedText,
+          selectedFile.size,
+          selectedFile.duration,
+          summarizedText,
+          currentCourse,
+          base64Encoded_MD
+        );
 
-    await createCourseAudioRef(
-      fileUrl,
-      selectedFile.name,
-      selectedFile.type,
-      transcriptedText,
-      selectedFile.size,
-      selectedFile.duration,
-      summarizedText,
-      currentCourse
-    );
+        // Set the uploaded state to true
+        setUploaded({
+          fileUrl,
+        });
+        passUp(fileUrl);
+        setLoading(false);
 
-    // Set the uploaded state to true
-    setUploaded({
-      fileUrl,
-    });
-    passUp(fileUrl);
-    setLoading(false);
+        // FIXME:
+        setUpdatedAudio(true);
+        window.location.reload();
+      } catch (error) {
+        console.warn("some error buddies");
+      }
+    };
+
+    uploadAudioToFireBase();
+
+    // use state values so that the current course can be updated
   };
 
   return (
