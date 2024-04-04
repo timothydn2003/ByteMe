@@ -9,7 +9,7 @@ import { Context } from "./CoursesContext";
 
 export const CoursesContent = () => {
   const [audioSources, setAudioSources] = useState([]);
-  const { currentCourse } = useContext(Context);
+  const { currentCourse, updatedAudio, setUpdatedAudio } = useContext(Context);
   let courseAudiosCollectionRef = collection(
     db,
     "Courses",
@@ -28,29 +28,21 @@ export const CoursesContent = () => {
     return audioSources;
   };
 
-  // useEffect(() => {
-  //     fetchReferenceAudios().then((audioSources) => {
-  //         setAudioSources(audioSources);
-  //     });
-  // }, []);
-
   useEffect(() => {
-    if (!currentCourse) return;
+    const updateAudios = async () => {
+      try {
+        const newAudioSources = await fetchReferenceAudios();
+        setAudioSources(newAudioSources);
+      } catch (error) {
+        console.error("Failed to fetch reference audios:", error);
+      }
+    };
 
-    courseAudiosCollectionRef = collection(
-      db,
-      "Courses",
-      `${currentCourse.id}`,
-      "Audios"
-    );
-    fetchReferenceAudios()
-      .then((audioSources) => {
-        setAudioSources(audioSources);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [currentCourse]);
+    if (updatedAudio) {
+      updateAudios();
+      setUpdatedAudio(false); // Reset the flag
+    }
+  }, [updatedAudio, fetchReferenceAudios]);
 
   return (
     <div className="course-audios">

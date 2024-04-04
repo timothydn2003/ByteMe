@@ -8,7 +8,7 @@ import { AudioTranscriptDrown } from "./AudioDropdown";
 import { LiveAudioTranscriptDropdown } from "./AudioDropdown/LiveAudioTranscriptDropdown";
 
 // FIREBASE imports
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../firebase-config";
 
 import "../../css/Transcripts/AudioTranscriber.css";
@@ -20,10 +20,9 @@ export const TranscriptsSection = () => {
   const { currentCourse } = useContext(Context);
 
   const [courseAudios, setCourseAudios] = useState([]);
-  const [courseImages, setCourseImages] = useState([])
+  const [courseImages, setCourseImages] = useState([]);
   const [newFile, addFile] = useState("");
-  const [uploadType, setUploadType] = useState(0)
-
+  const [uploadType, setUploadType] = useState(0);
   useEffect(() => {
     const fetchCourseAudios = async () => {
       if (!currentCourse) return;
@@ -34,19 +33,15 @@ export const TranscriptsSection = () => {
         `${currentCourse.id}`,
         "Audios"
       );
-      const data = await getDocs(courseAudioCollectionRef);
-      const tmpArr = data.docs
-        .map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }))
-        .sort((a, b) => {
-          const bDate = new Date(b.createdAt);
-          const aDate = new Date(a.createdAt);
-          return bDate - aDate;
-        });
 
-      setCourseAudios(tmpArr);
+      const q = query(courseAudioCollectionRef, orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(q);
+      const audios = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+
+      setCourseAudios(audios);
     };
 
     const fetchCourseImages = async () => {
@@ -70,7 +65,7 @@ export const TranscriptsSection = () => {
           return bDate - aDate;
         });
 
-        setCourseImages(tmpArr);
+      setCourseImages(tmpArr);
     };
 
     fetchCourseAudios();
@@ -111,26 +106,48 @@ export const TranscriptsSection = () => {
             <p className="courseDesc">{currentCourse.description}</p>
           </div>
         </div>
-        {
-          uploadType === 0 ?
+        {uploadType === 0 ? (
           <div className="audio-transmitters-container">
             <LiveAudioTranscriber />
-            <AudioComponent passUp={addFile} />
-          </div> :
+
+            {/* toggle for  audio or youtube */}
+            <AudioOption passUp={addFile} />
+          </div>
+        ) : (
           <ImageComponent passUp={addFile} />
-        }
-          <YoutubeConverter/>
+        )}
       </div>
 
       <div className="uploadToggleContainer">
         <div className="uploadToggle">
-          <div className="uploadToggleHighlighter" style={(uploadType === 0 ? {transform: 'translateX(-55%)'} : {transform: 'translateX(55%)'})}></div>
-          <button onClick={() => { setUploadType(0) }} className={"uploadToggleItem" + (uploadType === 0 ? " activeToggleItem" : "")}>
+          <div
+            className="uploadToggleHighlighter"
+            style={
+              uploadType === 0
+                ? { transform: "translateX(-55%)" }
+                : { transform: "translateX(55%)" }
+            }
+          ></div>
+          <button
+            onClick={() => {
+              setUploadType(0);
+            }}
+            className={
+              "uploadToggleItem" + (uploadType === 0 ? " activeToggleItem" : "")
+            }
+          >
             Audio
           </button>
-          <button onClick={() => { setUploadType(1) }} className={"uploadToggleItem" + (uploadType !== 0 ? " activeToggleItem" : "")}>
+          <button
+            onClick={() => {
+              setUploadType(1);
+            }}
+            className={
+              "uploadToggleItem" + (uploadType !== 0 ? " activeToggleItem" : "")
+            }
+          >
             Image
-          </button>  
+          </button>
         </div>
       </div>
 
@@ -147,15 +164,65 @@ export const TranscriptsSection = () => {
             {/* OLD dropdown */}
             {/* <AudioDropdown audioRef={audioRef} key={audioRef} /> */}
             {/* NEW dropdown */}
-            {(uploadType === 0 ? <AudioTranscriptDrown audioRef={ref} key={ref} /> : <ImageDropdown imgData={ref} key={ref} />)}
+            {uploadType === 0 ? (
+              <AudioTranscriptDrown audioRef={ref} key={ref} />
+            ) : (
+              <ImageDropdown imgData={ref} key={ref} />
+            )}
           </Col>
         ))
       ) : (
-        <h1>{`No ${(uploadType === 0 ? 'Audio' : 'Image')} Files`}</h1>
+        <h1>{`No ${uploadType === 0 ? "Audio" : "Image"} Files`}</h1>
       )}
-
     </>
   );
 };
 
 //{<LiveAudioTranscriptDropdown />}
+
+const AudioOption = ({ passUp }) => {
+  const [audioUploadType, setAudioUploadType] = useState(0);
+
+  return (
+    <div className="audioOptionContainer">
+      <div className="uploadToggleContainer">
+        <div className="uploadToggleAudioOptions">
+          <div
+            className="uploadToggleHighlighter"
+            style={
+              audioUploadType === 0
+                ? { transform: "translateX(-55%)" }
+                : { transform: "translateX(55%)" }
+            }
+          ></div>
+          <button
+            onClick={() => setAudioUploadType(0)}
+            className={
+              "uploadToggleItem" +
+              (audioUploadType === 0 ? " activeToggleItem" : "")
+            }
+          >
+            Audio
+          </button>
+          <button
+            onClick={() => setAudioUploadType(1)}
+            className={
+              "uploadToggleItem" +
+              (audioUploadType === 1 ? " activeToggleItem" : "")
+            }
+          >
+            YouTube
+          </button>
+        </div>
+      </div>
+
+      <div className="audioOptions">
+        {audioUploadType === 0 ? (
+          <AudioComponent passUp={passUp} />
+        ) : (
+          <YoutubeConverter passUp={passUp} />
+        )}
+      </div>
+    </div>
+  );
+};

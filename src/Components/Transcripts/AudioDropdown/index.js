@@ -14,6 +14,9 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 import useSound from "use-sound"; // for handling the sound
 
+// import Markdown lib
+import MDEditor from "@uiw/react-md-editor";
+
 /*
 interface audioRef {
     url: String;
@@ -179,9 +182,14 @@ export const AudioTranscriptDrown = ({ audioRef }) => {
         </div>
 
         <div className={`audio-details ${displayTranscript ? "active" : ""}`}>
-          <p className="audio-description">
+          {/* <p className="audio-description">
             {audioRef.summary || audioRef.transcript || ""}
-          </p>
+          </p> */}
+          <MarkdownContent
+            markdownValue={
+              audioRef?.markdownText || audioRef.summary || audioRef.transcript
+            }
+          />
         </div>
       </div>
 
@@ -205,6 +213,32 @@ export const AudioTranscriptDrown = ({ audioRef }) => {
           />
         </svg>
       </button>
+    </div>
+  );
+};
+
+const MarkdownContent = ({ markdownValue }) => {
+  const convertTextToMarkdown = (text) => {
+    try {
+      return atob(text);
+    } catch (error) {
+      return text;
+    }
+  };
+  const [value, setValue] = useState(convertTextToMarkdown(markdownValue));
+
+  return (
+    <div className="md-container" data-color-mode="light">
+      <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} />
+      {/* <div className="container" data-color-mode="light"> */}
+      {/* below Editor is if user wants to edit the markdown */}
+      {/* <MDEditor
+          value={value}
+          onChange={setValue}
+          className="audio-description"
+        />
+        <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} />
+      </div> */}
     </div>
   );
 };

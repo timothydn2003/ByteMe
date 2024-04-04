@@ -8,6 +8,7 @@ import {
   createCourseAudioRef,
   retrieveFileUrl,
   summarizeAudioTranscription,
+  summarizedTextToMarkdown,
   uploadAudioForTranscription,
   uploadFile,
 } from "../audioActions";
@@ -20,7 +21,8 @@ const ffmpeg = new FFmpeg();
 
 export const LiveAudioTranscriptDropdown = ({ startDate }) => {
   const [displayTranscript, setDisplayTranscript] = useState(true);
-  const { liveTranscription, currentCourse } = useContext(Context);
+  const { liveTranscription, currentCourse, updatedAudio, setUpdatedAudio } =
+    useContext(Context);
 
   const [ready, setReady] = useState(false);
 
@@ -163,10 +165,17 @@ export const LiveAudioTranscriptDropdown = ({ startDate }) => {
       );
 
       // assure we have a summarized text to upload; will leave this commented out for now since live audios are trickier to retain if error
-      // if (!summarizedText) {
-      //   console.error("Failed to summarize transcription");
-      //   return;
-      // }
+      if (!summarizedText) {
+        console.error("Failed to summarize transcription");
+        return;
+      }
+
+      // convert the summarizedtext to markdown for now
+      const markdownText = await summarizedTextToMarkdown(summarizedText);
+      // convert the markdown to base 64 to not lose the formatting
+      const base64Encoded_MD = btoa(markdownText);
+
+      console.log("md resp: ", markdownText);
 
       // Upload the file to Firebase Storage
       const fileRef = await uploadFile(audioFile);
@@ -182,9 +191,11 @@ export const LiveAudioTranscriptDropdown = ({ startDate }) => {
         audioFile.size,
         audioFile.duration,
         summarizedText,
-        currentCourse
+        currentCourse,
+        base64Encoded_MD
       );
 
+      setUpdatedAudio(true);
       window.location.reload();
     };
 

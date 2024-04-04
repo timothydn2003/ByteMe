@@ -5,6 +5,7 @@ import { Context } from "../../CoursesContext";
 import { useContext, useEffect, useRef, useState } from "react";
 
 // Resource thanks: https://github.com/NikValdez/voiceTextTut/blob/master/src/App.js
+// SpeechRecognition does not function FireFox
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 const mic = new SpeechRecognition();
@@ -27,10 +28,14 @@ export const LiveAudioTranscriber = () => {
   // storing the audio chunks
   const audioChunksRef = useRef([]);
 
+  // technically not even used rn
+  const [fullTranscription, setFullTranscription] = useState("");
+
   const { liveTranscription, setTranscription } = useContext(Context);
 
   // event listener for recording through user mic
   useEffect(() => {
+    console.log("handling listenting effect....");
     handleListen();
   }, [isListening]);
 
@@ -146,18 +151,26 @@ export const LiveAudioTranscriber = () => {
   const handleListen = () => {
     if (isListening) {
       mic.start();
+
       mic.onend = () => {
-        // console.log("continue..");
-        mic.start();
+        console.log("Speech Recognition service has stopped, restarting...");
+        setFullTranscription(liveTranscription.transcription);
+        // Restart the service
+        if (isListening) {
+          mic.start();
+        }
       };
     } else {
       mic.stop();
       mic.onend = () => {
-        // console.log("Stopped Mic on Click");
+        // FIXME: view me
+        // setFullTranscription(liveTranscription.transcription);
+        // error is stemming from these onEnd listeners
+        console.log("Stopped Mic on Click");
       };
     }
     mic.onstart = () => {
-      //   console.log("Mics on");
+      console.log("Mics on");
     };
 
     // as incoming data, update our notes
@@ -166,7 +179,12 @@ export const LiveAudioTranscriber = () => {
         .map((result) => result[0])
         .map((result) => result.transcript)
         .join("");
-      // console.log(transcript);
+      console.log(transcript);
+      const prevTranscription = liveTranscription.transcription;
+      setFullTranscription(
+        (prevTranscription) => prevTranscription + transcript
+      ); // COMMENT: utilize me for full transcription?
+
       setTranscription((prev) => ({ ...prev, transcription: transcript }));
       setNote(transcript);
       mic.onerror = (event) => {
@@ -177,9 +195,11 @@ export const LiveAudioTranscriber = () => {
 
   const handleRecording = () => {
     if (isRecording) {
+      console.log("recording stopping....");
       stopRecording();
       setIsListening(false);
     } else {
+      console.log("recording starting....");
       startRecording();
       setIsListening(true);
     }
