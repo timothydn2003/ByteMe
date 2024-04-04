@@ -9,6 +9,7 @@
     "@emotion/styled": "^11.11.5",
     "@ffmpeg/ffmpeg": "^0.12.10",
     "@ffmpeg/util": "^0.12.1",
+    "@google/generative-ai": "^0.5.0",
     "@mui/material": "^5.15.14",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

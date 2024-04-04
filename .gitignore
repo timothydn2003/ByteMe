@@ -24,3 +24,14 @@ yarn-error.log*
 
 # ENV files
 *.env
+.env
+
+# ignore local audio files
+*.m4a
+*.mp3
+*.wav
+
+# ignore prettier files
+.prettierignore
+.prettierrc
+
