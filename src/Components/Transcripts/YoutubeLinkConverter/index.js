@@ -48,8 +48,13 @@ export const YoutubeConverter = () => {
       } catch (error) {
         console.error(error);
       }
-      window.location.href = download
     }
+
+    useEffect(() => {
+        if (download) {
+          window.location.href = download;
+        }
+      }, [download]);
     return(
         <div className='youtube-link-converter'>
             <Button style={{marginTop: "20px"}} variant="contained" onClick={handleOpen}>Upload Youtube</Button>
