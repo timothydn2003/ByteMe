@@ -5,7 +5,20 @@
   margin-bottom: 3rem;
 }
 
+.audio-dropdown-component-wrapper {
+  border: solid 1px #c2c2c2;
+  border-radius: 10px;
+  padding: 1px;
+  margin-bottom: 3rem;
+}
+
 .audio-dropdown {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-right: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -17,7 +30,15 @@
     width: 2rem;
     height: 2rem;
     transform: rotate(-90deg);
+  .icon {
+    width: 2rem;
+    height: 2rem;
+    transform: rotate(-90deg);
 
+    &.open {
+      transform: rotate(0deg);
+    }
+  }
     &.open {
       transform: rotate(0deg);
     }
@@ -81,23 +102,23 @@
     position: absolute;
     right: 0.25rem;
     top: 0.25rem;
-    display: flex;
+    display: flex !important;
     padding: 0.25rem;
     align-items: center;
     justify-content: center;
-    background-color: #ff4747;
-    color: white;
+    background-color: rgba(0, 0, 0, 0);
+    color: #c2c2c2;
     border: none;
     border-radius: 9999px;
     cursor: pointer;
 
     /* effects; tailwind based ideas */
     transition-property: all;
-    transition-timining-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
-    visibility: hidden;
 
     &:hover {
+      color: white;
       background-color: #ff3333;
     }
 
