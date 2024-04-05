@@ -5,7 +5,20 @@
   margin-bottom: 3rem;
 }
 
+.audio-dropdown-component-wrapper {
+  border: solid 1px #c2c2c2;
+  border-radius: 10px;
+  padding: 1px;
+  margin-bottom: 3rem;
+}
+
 .audio-dropdown {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-right: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -17,7 +30,15 @@
     width: 2rem;
     height: 2rem;
     transform: rotate(-90deg);
+  .icon {
+    width: 2rem;
+    height: 2rem;
+    transform: rotate(-90deg);
 
+    &.open {
+      transform: rotate(0deg);
+    }
+  }
     &.open {
       transform: rotate(0deg);
     }
