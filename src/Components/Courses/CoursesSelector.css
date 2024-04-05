@@ -2,15 +2,14 @@
   /* border: 5px solid purple; */
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  justify-content: center;
+  justify-content: flex-start;
 
   /* section for adding new course */
   .courseAdd {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   /* section for displaying all courses */
@@ -18,8 +17,7 @@
     padding: 2px 2px !important;
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
-    justify-content: center;
+    justify-content: flex-start;
     width: 100%;
 
     /*  btn for a specific course; allow selection of course */
@@ -27,7 +25,7 @@
       display: flex;
       justify-content: center;
       width: 100%;
-      align-items: center;
+      align-items: flex-start;
       padding: 10px;
       background-color: white;
       cursor: pointer;
@@ -46,6 +44,7 @@
       position: relative;
       width: 100%;
       padding-bottom: clamp(1rem, 2vw, 2rem);
+      margin-bottom: 5%;
       font-weight: 300;
       display: flex;
       flex-direction: column;
@@ -161,31 +160,39 @@
       }
 
       .deleteBtn {
+        height: 15%;
+        aspect-ratio: 1 / 1;
         position: absolute;
-        right: 0.25rem;
-        top: 0.25rem;
-        display: flex;
+        left: 3%;
+        top: 72.5%;
+        display: flex !important;
         align-items: center;
         justify-content: center;
-        background-color: #ff4747;
-        color: white;
+        background-color: #ff474700;
+        color: #c2c2c24f;
         border: none;
         border-radius: 9999px;
         cursor: pointer;
+        padding: 0 !important;
 
         /* effects; tailwind based ideas */
         transition-property: all;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 150ms;
-        visibility: hidden;
 
         &:hover {
-          background-color: #ff3333;
+          color: #ff3333;
         }
 
-        svg {
-          width: 1rem !important;
-          height: 1rem !important;
+        &.activeDelete {
+          height: 12.5%;
+          left: 5%;
+          top: 72.5%;
+        }
+
+        .trash-icon {
+          width: 100% !important;
+          height: 100% !important;
         }
       }
     }
@@ -200,7 +207,11 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   /* height: 100%;
     width: 100%; */
+}
+
+.courseList-container::-webkit-scrollbar {
+  width: 0 !important;
 }

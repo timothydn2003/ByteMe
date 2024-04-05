@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "@mui/material/Button";
+import { IoTrash } from "react-icons/io5";
 
 // MATERIAL UI Imports
 import Modal from "@mui/material/Modal";
@@ -132,20 +133,8 @@ const CourseButtonTwo = ({ data }) => {
       </p>
 
       {/* delete */}
-      <button onClick={handleDelete} className="deleteBtn">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M6 18 18 6M6 6l12 12"
-          />
-        </svg>
+      <button onClick={handleDelete} className={`deleteBtn ${(data === currentCourse ? 'activeDelete' : '')}`}>
+        <IoTrash className="trash-icon" />
       </button>
     </button>
   );
