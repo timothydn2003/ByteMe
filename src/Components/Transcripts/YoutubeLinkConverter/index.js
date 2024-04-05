@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-
 const style = {
     position: 'absolute',
     top: '50%',
@@ -27,18 +26,17 @@ export const YoutubeConverter = () => {
     const handleClose = () => setOpen(false);
 
     const getVideo = async () => {
-      console.log(link)
-      const options = {
-        method: 'GET',
-        url: 'https://youtube-mp3-downloader2.p.rapidapi.com/ytmp3/ytmp3/',
-        params: {
-          url: link
-        },
-        headers: {
-          'X-RapidAPI-Key': `${process.env.X_RABIDAPI_KEY}`,
-          'X-RapidAPI-Host': 'youtube-mp3-downloader2.p.rapidapi.com'
-        }
-      };
+        const options = {
+            method: 'GET',
+            url: 'https://youtube-mp3-downloader2.p.rapidapi.com/ytmp3/ytmp3/',
+            params: {
+              url: link
+            },
+            headers: {
+              'X-RapidAPI-Key': '753fe216d0msh58435e99dde1dfdp13dd38jsncbb34d83b22b',
+              'X-RapidAPI-Host': 'youtube-mp3-downloader2.p.rapidapi.com'
+            }
+          };
       
       try {
         setShow(true)
