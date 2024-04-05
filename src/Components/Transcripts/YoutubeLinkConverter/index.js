@@ -25,6 +25,7 @@ export const YoutubeConverter = () => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
     const getVideo = async () => {
       console.log(link)
       const options = {
@@ -34,7 +35,7 @@ export const YoutubeConverter = () => {
           url: link
         },
         headers: {
-          'X-RapidAPI-Key': '753fe216d0msh58435e99dde1dfdp13dd38jsncbb34d83b22b',
+          'X-RapidAPI-Key': `${process.env.X_RABIDAPI_KEY}`,
           'X-RapidAPI-Host': 'youtube-mp3-downloader2.p.rapidapi.com'
         }
       };
