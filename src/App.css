@@ -73,3 +73,8 @@ body {
     display: none;
   }
 }
+
+/* chatbot integration */
+.cs-message__html-content {
+  text-align: left;
+}

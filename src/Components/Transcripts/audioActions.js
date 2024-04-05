@@ -326,7 +326,8 @@ export const createCourseAudioRef = async (
   duration,
   summarizedText,
   currentCourse,
-  markdownText
+  markdownText,
+  keyTopics
 ) => {
   const audioRef = {
     url: fileUrl,
@@ -339,6 +340,7 @@ export const createCourseAudioRef = async (
     transcript: transcript,
     summary: summarizedText,
     markdownText,
+    keyTopics,
   };
 
   const courseAudioCollectionRef = collection(
@@ -348,4 +350,48 @@ export const createCourseAudioRef = async (
     "Audios"
   );
   await addDoc(courseAudioCollectionRef, audioRef);
+};
+
+export const generateKeyTopics = async (transcript) => {
+  // call API to generate key topics
+  // const MASTER_PROMPT = `Your task is to analyze and extract the key topics from a given set of summarized texts. Carefully read through each summary, identifying and highlighting the most significant themes, concepts, and ideas. Focus on pinpointing the core elements that encapsulate the essence of the text. After reviewing the summaries, list the key topics in a clear and organized manner. This list should represent a distilled version of the summarized text, capturing its most crucial and central points. Be sure to differentiate between primary and secondary topics, prioritizing them based on their relevance and significance within the text. Your goal is to provide a concise yet comprehensive overview of the main topics, offering a clear insight into the text's core subject matter.`
+  const MASTER_PROMPT = `Your task now is to delve into the summarized text provided and extract not just key words, but an array of five distinct elements that best encapsulate the text's main themes or ideas. These elements could be crucial words, pivotal phrases, or significant concepts. Scrutinize the content to isolate these elements, ensuring they collectively provide a comprehensive representation of the text's core message. Organize them into a structured array format, with each element holding its own place in the list. This array should serve as a condensed yet complete overview of the text's most critical points, offering a brief but insightful glimpse into the overarching themes or subjects discussed. Aim for a balanced selection that together forms a coherent summary of the text's essence, condensed into five essential elements.`;
+  try {
+    const gptResponse = await fetch(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: MASTER_PROMPT,
+            },
+            {
+              role: "user",
+              content: transcript,
+            },
+          ],
+        }),
+      }
+    );
+    if (!gptResponse.ok) {
+      console.error("Failed to generate key topics");
+      return null;
+    }
+
+    const gptJson = await gptResponse.json();
+    console.log("gpt json keytopics: ", gptJson);
+    console.log("content msg: ", gptJson.choices[0].message.content);
+    return gptJson.choices[0].message.content;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+  // return the key topics
 };

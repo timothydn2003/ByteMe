@@ -17,7 +17,7 @@ import { LiveAudioTranscriber } from "./LiveAudioTranscriber";
 import { YoutubeConverter } from "./YoutubeLinkConverter";
 
 export const TranscriptsSection = () => {
-  const { currentCourse } = useContext(Context);
+  const { currentCourse, setCurrentCourse } = useContext(Context);
 
   const [courseAudios, setCourseAudios] = useState([]);
   const [courseImages, setCourseImages] = useState([]);
@@ -70,6 +70,11 @@ export const TranscriptsSection = () => {
 
     fetchCourseAudios();
     fetchCourseImages();
+
+    // set the first course retrieve to be the current course
+    if (!currentCourse && courseAudios.length > 0) {
+      setCurrentCourse(courseAudios[0]);
+    }
   }, [currentCourse, newFile]);
 
   if (!currentCourse) {

@@ -6,6 +6,7 @@ import { Context } from "../../CoursesContext";
 import { MediaPlayer } from ".";
 import {
   createCourseAudioRef,
+  generateKeyTopics,
   retrieveFileUrl,
   summarizeAudioTranscription,
   summarizedTextToMarkdown,
@@ -15,6 +16,8 @@ import {
 
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
+
+import { Base64 } from "js-base64";
 
 // FIXME: maybe can use a hook for such?!?! unsure
 const ffmpeg = new FFmpeg();
@@ -173,7 +176,8 @@ export const LiveAudioTranscriptDropdown = ({ startDate }) => {
       // convert the summarizedtext to markdown for now
       const markdownText = await summarizedTextToMarkdown(summarizedText);
       // convert the markdown to base 64 to not lose the formatting
-      const base64Encoded_MD = btoa(markdownText);
+      // const base64Encoded_MD = btoa(markdownText);
+      const base64Encoded_MD = Base64.encode(markdownText);
 
       console.log("md resp: ", markdownText);
 
@@ -182,6 +186,9 @@ export const LiveAudioTranscriptDropdown = ({ startDate }) => {
       if (!fileRef) return;
 
       const fileUrl = await retrieveFileUrl(fileRef);
+
+      // retrieve key topics
+      const keyTopics = (await generateKeyTopics(transcriptedText)) || [];
 
       await createCourseAudioRef(
         fileUrl,
@@ -192,7 +199,8 @@ export const LiveAudioTranscriptDropdown = ({ startDate }) => {
         audioFile.duration,
         summarizedText,
         currentCourse,
-        base64Encoded_MD
+        base64Encoded_MD,
+        keyTopics
       );
 
       setUpdatedAudio(true);

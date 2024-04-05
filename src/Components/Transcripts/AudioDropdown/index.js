@@ -16,6 +16,10 @@ import useSound from "use-sound"; // for handling the sound
 
 // import Markdown lib
 import MDEditor from "@uiw/react-md-editor";
+// import { translateMarkdown as translationOfMarkdown } from "../../../lib/translations";
+
+// import Base64
+import { Base64 } from "js-base64";
 
 /*
 interface audioRef {
@@ -83,6 +87,8 @@ export const AudioDropdown = ({ audioRef }) => {
 // NEW dropdown
 export const AudioTranscriptDrown = ({ audioRef }) => {
   const [displayTranscript, setDisplayTranscript] = useState(false);
+
+  // const [lang, setLang] = useState("en");
 
   const [updateTitle, setUpdateTitle] = useState({
     editing: false,
@@ -182,9 +188,6 @@ export const AudioTranscriptDrown = ({ audioRef }) => {
         </div>
 
         <div className={`audio-details ${displayTranscript ? "active" : ""}`}>
-          {/* <p className="audio-description">
-            {audioRef.summary || audioRef.transcript || ""}
-          </p> */}
           <MarkdownContent
             markdownValue={
               audioRef?.markdownText || audioRef.summary || audioRef.transcript
@@ -220,26 +223,106 @@ export const AudioTranscriptDrown = ({ audioRef }) => {
 const MarkdownContent = ({ markdownValue }) => {
   const convertTextToMarkdown = (text) => {
     try {
-      return atob(text);
+      // return atob(text);
+      // return decodeURIComponent(escape(atob(text)));
+      return Base64.decode(text);
     } catch (error) {
       return text;
     }
   };
+
+  // depending on lang, translate the markdown
+  // const [lang, setLang] = useState("en");
+  // console.log("markdown trans:", translateMarkdown(markdownValue, lang));
+
+  // const [value, setValue] = useState(translateMarkdown(markdownValue));
+  // const [value, setValue] = useState(translateMarkdown(markdownValue, lang));
+
+  // const handleLangChange = (e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+
+  //   // if e has en in content
+  //   if (e.target.textContent.toLowerCase().includes("en")) {
+  //     // change to english
+  //     setLang("en");
+  //   } else {
+  //     setLang("es");
+  //   }
+
+  //   setValue(translateMarkdown(value, lang));
+  // };
   const [value, setValue] = useState(convertTextToMarkdown(markdownValue));
 
+  // useEffect(() => {
+  //   const translateFxn = async () => {
+  //     const translated = await translationOfMarkdown(
+  //       convertTextToMarkdown(markdownValue),
+  //       lang
+  //     );
+  //     setValue(translated);
+  //   };
+  //   translateFxn();
+  // }, [lang, markdownValue]);
+
+  // const handleLangChange = (e) => {
+  //   e.preventDefault();
+  //   const newLang = e.target.textContent.toLowerCase().includes("en")
+  //     ? "en"
+  //     : "es";
+  //   setLang(newLang);
+  // };
+
+  // useEffect(() => {
+  //   setValue(translateMarkdown(value, lang));
+  // }, [lang]);
+
   return (
-    <div className="md-container" data-color-mode="light">
-      <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} />
-      {/* <div className="container" data-color-mode="light"> */}
-      {/* below Editor is if user wants to edit the markdown */}
-      {/* <MDEditor
+    <>
+      {/* buttons for toggling lang */}
+      {/* <div
+        className="lang-buttons"
+        style={{
+          display: "flex",
+          justifyContent: "left",
+          alignItems: "center",
+          gap: "0.8rem",
+        }}
+      >
+        <button
+          className="lang-button"
+          style={{
+            backgroundColor: lang === "en" ? "#1E3B57" : "#f0f0f0",
+            color: lang === "en" ? "white" : "black",
+          }}
+          onClick={handleLangChange}
+        >
+          EN
+        </button>
+        <button
+          className="lang-button"
+          style={{
+            backgroundColor: lang === "es" ? "#1E3B57" : "#f0f0",
+            color: lang === "es" ? "white" : "black",
+          }}
+          onClick={handleLangChange}
+        >
+          ES
+        </button>
+      </div> */}
+      <div className="md-container" data-color-mode="light">
+        <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} />
+        {/* <div className="container" data-color-mode="light"> */}
+        {/* below Editor is if user wants to edit the markdown */}
+        {/* <MDEditor
           value={value}
           onChange={setValue}
           className="audio-description"
         />
         <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} />
       </div> */}
-    </div>
+      </div>
+    </>
   );
 };
 

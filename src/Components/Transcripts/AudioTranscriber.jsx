@@ -27,12 +27,15 @@ import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
 import {
   createCourseAudioRef,
+  generateKeyTopics,
   retrieveFileUrl,
   summarizeAudioTranscription,
   summarizedTextToMarkdown,
   uploadAudioForTranscription,
   uploadFile,
 } from "./audioActions";
+
+import { Base64 } from "js-base64";
 
 const ffmpeg = new FFmpeg();
 
@@ -203,7 +206,8 @@ export const AudioComponent = ({ passUp }) => {
 
     console.log("md resp: ", markdownText);
     // convert the markdown to base 64 to not lose the formatting
-    const base64Encoded_MD = btoa(markdownText);
+    // const base64Encoded_MD = btoa(markdownText);
+    const base64Encoded_MD = Base64.encode(markdownText);
     setLoadingSummary(false);
 
     const uploadAudioToFireBase = async () => {
@@ -213,6 +217,9 @@ export const AudioComponent = ({ passUp }) => {
 
         if (!fileRef) return;
         console.log("File reference:", fileRef);
+
+        // retrieve key topics
+        const keyTopics = (await generateKeyTopics(transcriptedText)) || [];
 
         const fileUrl = await retrieveFileUrl(fileRef);
         await createCourseAudioRef(
@@ -224,7 +231,8 @@ export const AudioComponent = ({ passUp }) => {
           selectedFile.duration,
           summarizedText,
           currentCourse,
-          base64Encoded_MD
+          base64Encoded_MD,
+          keyTopics
         );
 
         // Set the uploaded state to true
