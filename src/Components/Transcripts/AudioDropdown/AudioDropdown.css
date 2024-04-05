@@ -102,12 +102,12 @@
     position: absolute;
     right: 0.25rem;
     top: 0.25rem;
-    display: flex;
+    display: flex !important;
     padding: 0.25rem;
     align-items: center;
     justify-content: center;
-    background-color: #ff4747;
-    color: white;
+    background-color: rgba(0, 0, 0, 0);
+    color: #c2c2c2;
     border: none;
     border-radius: 9999px;
     cursor: pointer;
@@ -116,9 +116,9 @@
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
-    visibility: hidden;
 
     &:hover {
+      color: white;
       background-color: #ff3333;
     }
 
