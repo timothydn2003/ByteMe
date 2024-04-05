@@ -1,115 +1,139 @@
 .component {
-    background-color: white;
-    width: 100%;
-    margin: 1em auto;
-    padding-bottom: 2em;
-    border-radius: 10px;
+  background-color: white;
+  width: 100%;
+  margin: 1em auto;
+  padding-bottom: 2em;
+  border-radius: 10px;
 }
 
 .musicCover {
-    border-radius: 10%;
+  border-radius: 10%;
 }
 
 .playButton {
-    background: none;
-    border: none;
-    align-items: center;
-    justify-content: center;
+  background: none;
+  border: none;
+  align-items: center;
+  justify-content: center;
 }
 
 .time {
-    margin: 0;
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    color: #22223b;
-    font-size: smaller;
+  margin: 0;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  color: #22223b;
+  font-size: smaller;
 }
 
 .timeline {
-    width: 80%;
-    background-color: #22223b;
+  width: 80%;
+  background-color: #22223b;
 }
 
 input[type="range"] {
-    background-color: #22223b;
+  background-color: #22223b;
 }
 
 .courseTitle {
-    color: white;
-    border-radius: 0.5rem;
-    padding: 5px;
-    margin-top: 0.75rem;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 5px;
+  margin-top: 0.75rem;
 
-    background: hsla(213, 77%, 14%, 1);
+  background: hsla(213, 77%, 14%, 1);
 
-    background: linear-gradient(
-        45deg,
-        hsla(213, 77%, 14%, 1) 0%,
-        hsla(202, 27%, 45%, 1) 100%
-    );
+  background: linear-gradient(
+    45deg,
+    hsla(213, 77%, 14%, 1) 0%,
+    hsla(202, 27%, 45%, 1) 100%
+  );
 
-    background: -moz-linear-gradient(
-        45deg,
-        hsla(213, 77%, 14%, 1) 0%,
-        hsla(202, 27%, 45%, 1) 100%
-    );
+  background: -moz-linear-gradient(
+    45deg,
+    hsla(213, 77%, 14%, 1) 0%,
+    hsla(202, 27%, 45%, 1) 100%
+  );
 
-    background: -webkit-linear-gradient(
-        45deg,
-        hsla(213, 77%, 14%, 1) 0%,
-        hsla(202, 27%, 45%, 1) 100%
-    );
+  background: -webkit-linear-gradient(
+    45deg,
+    hsla(213, 77%, 14%, 1) 0%,
+    hsla(202, 27%, 45%, 1) 100%
+  );
 
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 );
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 );
 }
 
 .courseDesc {
-    color: rgba(13, 13, 13, 0.5);
-    font-size: clamp(0.1rem, 0.8vw, 1rem);
+  color: rgba(13, 13, 13, 0.5);
+  font-size: clamp(0.6rem, 0.8vw, 1rem);
 }
 
 .audio-component-wrapper {
-    width: 30%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
+  /* width: 30%; */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* content for recording and uploading files */
+.audio-transmitters-container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+}
+
+.description-content {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
 }
 
 .audio-component {
-    width: 90%;
-    padding: 0 !important;
-    margin: 0 !important;
-    font-size: clamp(1rem, 1.25vw, 2rem);
-    font-weight: 400;
-    border: none;
-    border-radius: 0.25em;
-    transform: none;
-    box-shadow: none;
-    color: white;
-    transition: transform 0.1s linear, box-shadow 0.1s linear;
-    background: #2472fc !important;
+  width: 90%;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: clamp(1rem, 1.25vw, 2rem);
+  font-weight: 400;
+  border: none;
+  border-radius: 0.25em;
+  transform: none;
+  box-shadow: none;
+  color: white;
+  transition: transform 0.1s linear, box-shadow 0.1s linear;
+  background: #2472fc !important;
 }
 
 .audio-component:hover {
-    transform: translate(-1px, -1px);
-    box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 4px;
+  transform: translate(-1px, -1px);
+  box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 4px;
 }
 
 .audio-component:active {
-    transform: none;
-    box-shadow: none;
+  transform: none;
+  box-shadow: none;
+}
+
+@media (max-width: 900px) {
+  .component {
+    width: 50%;
+  }
 }
 
 .transcription-loader,
 .summary-loader {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
 }
 
 .typewriter-text {
@@ -205,20 +229,29 @@ input[type="range"] {
 }
 
 @keyframes typing {
-    from {
-        width: 0;
-    }
-    to {
-        width: 100%;
-    }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes blink-caret {
-    from,
-    to {
-        border-color: transparent;
-    }
-    50% {
-        border-color: black;
-    }
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: black;
+  }
+}
+
+.typewriter-text {
+  overflow: hidden;
+  border-right: 0.15em solid black;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: 0.15em;
+  animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
 }

@@ -48,6 +48,7 @@
     font-size: clamp(0.8rem, 1.5vw, 1.5rem);
     position: relative;
     top: 0.1rem;
+    text-align: left;
   }
 
   .audio-date {
@@ -81,7 +82,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  /* width: 100%; */
+  width: 100%;
   border: 1px solid #c2c2c2;
   border-radius: 10px;
 
@@ -138,9 +139,25 @@
     overflow: hidden;
     text-overflow: ellipsis;
 
+    .audio-title-content {
+      overflow-x: auto;
+    }
     .audio-title {
       font-size: clamp(1rem, 2vw, 2rem);
       font-weight: bold;
+      text-align: left;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .audio-title-edit {
+      min-width: 150px;
+      width: 25%;
+      margin: auto;
+      padding: 0.5rem;
+      caret-color: #1b3854;
+      border-radius: 0.75rem;
+      border: 3px solid #1b3854;
     }
 
     .audio-details {
@@ -158,6 +175,7 @@
 
       .audio-description {
         color: rgb(107 114 128);
+        text-align: left;
       }
     }
   }

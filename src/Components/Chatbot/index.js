@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
   MainContainer,
@@ -8,9 +9,11 @@ import {
   MessageInput,
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
+import { Context } from "../CoursesContext";
 
 export function ChatbotSection() {
   const [typing, setTyping] = useState(false);
+  const { currentCourse } = useContext(Context);
   const [messages, setMessages] = useState([
     {
       message: "Hello I will be your tutor today",
@@ -18,6 +21,17 @@ export function ChatbotSection() {
       direction: "incoming",
     },
   ]);
+
+  useEffect(() => {
+    setMessages([
+      {
+        message: "Hello I will be your tutor today",
+        sender: "ChatGPT",
+        direction: "incoming",
+      },
+    ]);
+    console.log("Effect Encountered", currentCourse);
+  }, [currentCourse]);
 
   const handleSend = async (message) => {
     const newMessage = {
@@ -55,7 +69,7 @@ export function ChatbotSection() {
 
     const systemMessage = {
       role: "system",
-      content: "Explain content for theoretical physics",
+      content: `Tutor for ${currentCourse.description}`,
     };
 
     const apiRequestBody = {

@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { Context } from "../CoursesContext";
 import { AudioComponent } from "./AudioTranscriber";
 import { AudioTranscriptDrown } from "./AudioDropdown";
+import { LiveAudioTranscriptDropdown } from "./AudioDropdown/LiveAudioTranscriptDropdown";
 
 // FIREBASE imports
 import { collection, getDocs } from "firebase/firestore";
@@ -12,9 +13,10 @@ import { db } from "../../firebase-config";
 
 import "../../css/Transcripts/AudioTranscriber.css";
 import ImageComponent, { ImageDropdown } from "./ImageTranscriber";
+import { LiveAudioTranscriber } from "./LiveAudioTranscriber";
 
 export const TranscriptsSection = () => {
-  const { courses, currentCourse, addCourse } = useContext(Context);
+  const { currentCourse } = useContext(Context);
 
   const [courseAudios, setCourseAudios] = useState([]);
   const [courseImages, setCourseImages] = useState([])
@@ -102,15 +104,7 @@ export const TranscriptsSection = () => {
           marginBottom: "10px",
         }}
       >
-        <div
-          style={{
-            width: "60%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-evenly",
-            alignItems: "flex-start",
-          }}
-        >
+        <div className="description-content">
           <h3>Description:</h3>
           <div style={{ width: "100%", textAlign: "left" }}>
             <p className="courseDesc">{currentCourse.description}</p>
@@ -118,7 +112,10 @@ export const TranscriptsSection = () => {
         </div>
         {
           uploadType === 0 ?
-          <AudioComponent passUp={addFile} /> :
+          <div className="audio-transmitters-container">
+            <LiveAudioTranscriber />
+            <AudioComponent passUp={addFile} />
+          </div> :
           <ImageComponent passUp={addFile} />
         }
       </div>
@@ -134,6 +131,8 @@ export const TranscriptsSection = () => {
           </button>  
         </div>
       </div>
+
+      {<LiveAudioTranscriptDropdown />}
 
       {(uploadType === 0 ? courseAudios : courseImages).length !== 0 ? (
         (uploadType === 0 ? courseAudios : courseImages).map((ref) => (
@@ -155,3 +154,5 @@ export const TranscriptsSection = () => {
     </>
   );
 };
+
+//{<LiveAudioTranscriptDropdown />}
