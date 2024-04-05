@@ -10,6 +10,7 @@ import { Context } from "../CoursesContext";
 import { CoursesSelector } from "../Courses/CoursesSelector";
 import { TranscriptsSection } from "../Transcripts";
 import { ChatbotSection } from "../Chatbot";
+import { YoutubeConverter } from "../Transcripts/YoutubeLinkConverter";
 
 export const Home = () => {
   // import context

@@ -14,6 +14,7 @@ import { db } from "../../firebase-config";
 import "../../css/Transcripts/AudioTranscriber.css";
 import ImageComponent, { ImageDropdown } from "./ImageTranscriber";
 import { LiveAudioTranscriber } from "./LiveAudioTranscriber";
+import { YoutubeConverter } from "./YoutubeLinkConverter";
 
 export const TranscriptsSection = () => {
   const { currentCourse } = useContext(Context);
@@ -118,6 +119,7 @@ export const TranscriptsSection = () => {
           </div> :
           <ImageComponent passUp={addFile} />
         }
+          <YoutubeConverter/>
       </div>
 
       <div className="uploadToggleContainer">
@@ -151,6 +153,7 @@ export const TranscriptsSection = () => {
       ) : (
         <h1>{`No ${(uploadType === 0 ? 'Audio' : 'Image')} Files`}</h1>
       )}
+
     </>
   );
 };
