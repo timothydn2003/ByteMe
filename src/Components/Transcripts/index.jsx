@@ -13,6 +13,7 @@ import { db } from "../../firebase-config";
 
 import "../../css/Transcripts/AudioTranscriber.css";
 import { LiveAudioTranscriber } from "./LiveAudioTranscriber";
+import { YoutubeConverter } from "./YoutubeLinkConverter";
 
 export const TranscriptsSection = () => {
   const { currentCourse } = useContext(Context);
@@ -85,6 +86,7 @@ export const TranscriptsSection = () => {
         <div className="audio-transmitters-container">
           <LiveAudioTranscriber />
           <AudioComponent passUp={addFile} />
+          <YoutubeConverter/>
         </div>
       </div>
       {<LiveAudioTranscriptDropdown />}
@@ -105,6 +107,7 @@ export const TranscriptsSection = () => {
       ) : (
         <h1>No audio files</h1>
       )}
+
     </>
   );
 };
