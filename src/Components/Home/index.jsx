@@ -12,7 +12,10 @@ import { TranscriptsSection } from "../Transcripts";
 import { ChatbotSection } from "../Chatbot";
 import { YoutubeConverter } from "../Transcripts/YoutubeLinkConverter";
 
-export const Home = () => {
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../../firebase-config.js';
+
+export const Home = ({ props }) => {
   // import context
   const { courses, currentCourse, addCourse } = useContext(Context);
 
