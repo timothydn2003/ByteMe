@@ -90,12 +90,15 @@ export default function AuthPage() {
     return (
         <div className="pageBackground">
             <form onSubmit={handleAuthSubmit} className="authForm">
+                <div className="appTitle">
+                    <p>Byte My Courses</p>
+                </div>
                 <h2  className="authFormTitle">
                     {
                         (
                             signUp ?
                             'Sign Up' :
-                            'Login'
+                            'Log In'
                         )
                     }
                 </h2>
