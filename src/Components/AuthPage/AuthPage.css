@@ -7,30 +7,26 @@
     align-items: center;
 
     background: hsla(213, 77%, 14%, 1);
-
     background: linear-gradient(
         45deg,
         hsla(213, 77%, 14%, 1) 0%,
         hsla(202, 27%, 45%, 1) 100%
     );
-
     background: -moz-linear-gradient(
         45deg,
         hsla(213, 77%, 14%, 1) 0%,
         hsla(202, 27%, 45%, 1) 100%
     );
-
     background: -webkit-linear-gradient(
         45deg,
         hsla(213, 77%, 14%, 1) 0%,
         hsla(202, 27%, 45%, 1) 100%
     );
-
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 );
 }
 
 .authForm {
-    width: 25%;
+    aspect-ratio: 9 / 16;
     height: max(700px, 75%);
     border-radius: 0.5rem;
     display: flex;
@@ -39,12 +35,46 @@
     align-items: center;
     background-color: white;
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
-    padding-top: 2.5%;
     padding-bottom: 1%;
+    padding-top: 2rem;
+}
+
+.appTitle {
+    width: 90%;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
+
+.appTitle p {
+    padding: 0px 5px;
+    border-radius: 5px;
+    color: white;
+
+    background: hsla(213, 77%, 14%, 1);
+    background: linear-gradient(
+        45deg,
+        hsla(213, 77%, 14%, 1) 0%,
+        hsla(202, 27%, 45%, 1) 100%
+    );
+    background: -moz-linear-gradient(
+        45deg,
+        hsla(213, 77%, 14%, 1) 0%,
+        hsla(202, 27%, 45%, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+        45deg,
+        hsla(213, 77%, 14%, 1) 0%,
+        hsla(202, 27%, 45%, 1) 100%
+    );
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 );
 }
 
 .authFormTitle {
     font-weight: bold;
+    margin-top: 5%;
     margin-bottom: 5%;
     color: rgb(68, 97, 114);
 }
@@ -63,7 +93,7 @@
 
 .formInputWrapper label {
     position: absolute;
-    margin-bottom: 4%;
+    margin-bottom: 4em;
     font-weight: bold;
     font-size: 0.75rem;
     color: #c2c2c2;
