@@ -11,7 +11,10 @@ import { CoursesSelector } from "../Courses/CoursesSelector";
 import { TranscriptsSection } from "../Transcripts";
 import { ChatbotSection } from "../Chatbot";
 
-export const Home = () => {
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../../firebase-config.js';
+
+export const Home = ({ props }) => {
   // import context
   const { courses, currentCourse, addCourse } = useContext(Context);
 

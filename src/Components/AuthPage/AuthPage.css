@@ -1,0 +1,173 @@
+.pageBackground {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background: hsla(213, 77%, 14%, 1);
+
+    background: linear-gradient(
+        45deg,
+        hsla(213, 77%, 14%, 1) 0%,
+        hsla(202, 27%, 45%, 1) 100%
+    );
+
+    background: -moz-linear-gradient(
+        45deg,
+        hsla(213, 77%, 14%, 1) 0%,
+        hsla(202, 27%, 45%, 1) 100%
+    );
+
+    background: -webkit-linear-gradient(
+        45deg,
+        hsla(213, 77%, 14%, 1) 0%,
+        hsla(202, 27%, 45%, 1) 100%
+    );
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 );
+}
+
+.authForm {
+    width: 25%;
+    height: max(700px, 75%);
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+    padding-top: 2.5%;
+    padding-bottom: 1%;
+}
+
+.authFormTitle {
+    font-weight: bold;
+    margin-bottom: 5%;
+    color: rgb(68, 97, 114);
+}
+
+.formInputWrapper {
+    width: 80%;
+    height: max(30px, 5%);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2px;
+    border-bottom: solid 1px #c2c2c2;
+    margin-top: 15%;
+}
+
+.formInputWrapper label {
+    position: absolute;
+    margin-bottom: 4%;
+    font-weight: bold;
+    font-size: 0.75rem;
+    color: #c2c2c2;
+}
+
+.formInputWrapper div {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.formInputWrapper input {
+    flex-grow: 1;
+    height: 100%;
+    border: none;
+    outline: none;
+    color: hsla(213, 77%, 14%, 1);
+    caret-color: #c2c2c2;
+}
+
+.emailInput {
+
+}
+
+.passwordInput {
+
+}
+
+.confirmPasswordInput {
+
+}
+
+.authErrorWrapper {
+    width: 80%;
+    height: 5%;
+    margin-top: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.authError {
+    color: crimson;
+    font-size: 0.75rem;
+}
+
+.submitAuth {
+    width: 80%;
+    border: none;
+    border-radius: 15px;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    transform: none;
+    box-shadow: none;
+    transition: transform 0.1s linear, box-shadow 0.1s linear;
+    color: white;
+    background: hsla(213, 77%, 14%, 1);
+
+    background: linear-gradient(
+        45deg,
+        hsla(213, 77%, 14%, 1) 0%,
+        hsla(202, 27%, 45%, 1) 100%
+    );
+
+    background: -moz-linear-gradient(
+        45deg,
+        hsla(213, 77%, 14%, 1) 0%,
+        hsla(202, 27%, 45%, 1) 100%
+    );
+
+    background: -webkit-linear-gradient(
+        45deg,
+        hsla(213, 77%, 14%, 1) 0%,
+        hsla(202, 27%, 45%, 1) 100%
+    );
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#08203E", endColorstr="#557C93", GradientType=1 );
+}
+
+.submitAuth:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: rgb(0 0 0 / 0.5) 2px 2px 4px;
+}
+
+.submitAuth:active {
+    transform: none !important;
+    box-shadow: inset rgb(0 0 0 / 0.5) 1px 1px 2px !important;
+}
+
+.formSpacer {
+    flex-grow: 1;
+}
+
+.formSwitch {
+    font-weight: bold;
+    color: #c2c2c2;
+    font-size: 0.75rem;
+}
+
+.formSwitch:hover {
+    cursor: pointer;
+    color: #2472fc;
+}
